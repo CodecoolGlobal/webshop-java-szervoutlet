@@ -52,6 +52,6 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
                 return pc;
             }
         }
-        return data.get(0);
+        return null;
     };
 }

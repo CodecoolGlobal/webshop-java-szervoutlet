@@ -8,6 +8,7 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -41,7 +42,7 @@ public class ProductController extends HttpServlet {
         context.setVariable("recipient", "World");
         context.setVariable("category", productCategoryDataStore.find(1));
         context.setVariable("supplier", supplierDataStore.getAll());
-        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        context.setVariable("products", productDataStore.getAll());
         engine.process("product/index.html", context, resp.getWriter());
     }
 
@@ -54,25 +55,38 @@ public class ProductController extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
-        String selectedSupplierValue = req.getParameter("orderBySupplier");
         String selectedProductValue = req.getParameter("orderByProductCategory");
+        String selectedSupplierValue = req.getParameter("orderBySupplier");
+
+        Supplier supplier = supplierDataStore.getByName(selectedSupplierValue);
+        ProductCategory productCategory = productCategoryDataStore.getByName(selectedProductValue);
+
 
         if(!selectedSupplierValue.equals("None")){
-            products = productDataStore.getBy(supplierDataStore.getByName(selectedSupplierValue));
+            products = productDataStore.getBy(supplier);
+            if(!selectedProductValue.equals("None")){
+                products = productDataStore.getBy(productCategory, supplier);
+            }
+        } else if(!selectedProductValue.equals("None")){
+            products = productDataStore.getBy(productCategory);
         } else{
             products = productDataStore.getAll();
         }
 
+
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
+
+        if (productCategoryDataStore.getAll().contains(productCategory)) {
+            context.setVariable("currentCategory", productCategory);
+        }
+        context.setVariable("selectedProduct", selectedProductValue);
+        context.setVariable("selectedSupplier", selectedSupplierValue);
         context.setVariable("recipient", "World");
-        context.setVariable("category", productCategoryDataStore.find(1));
+        context.setVariable("category", productCategoryDataStore.getAll());
         context.setVariable("supplier", supplierDataStore.getAll());
         context.setVariable("products", products);
         engine.process("product/index.html", context, resp.getWriter());
-
-
     }
-
 }
