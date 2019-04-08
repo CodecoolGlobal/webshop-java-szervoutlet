@@ -58,7 +58,22 @@
             </div>
         </div>
     </div>
+    <div id="sort-form" class="styled-select blue semi-square">
+        <form action="/" method="POST">
+            <p style="font-weight: bold">Sort by Product Category/Supplier: </p>
+            <select id="orderBy_productCategory" name="orderByProductCategory" >
+                <option value="None" selected="selected">None</option>
+                <option th:each="prodCat,iterStat : ${category}" th:text="${prodCat.name}" th:value="${prodCat.name}">Product name</option>
+            </select>
 
+            <select id="orderBy_supplier" name="orderBySupplier">
+                <option value="None" selected="selected">None</option>
+                <option th:each="supp,iterStat : ${supplier}" th:text="${supp.name}" th:value="${supp.name}">Supplier name</option>
+            </select>
+            <button type="submit" name="order_direction"
+                    value="asc" title="Ascending order"><i class="fa fa-sort-amount-asc"></i>Sort</button>
+        </form>
+    </div>
 </div>
 
 <div th:replace="footer.html :: copy"></div>
