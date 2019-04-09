@@ -23,10 +23,6 @@ import java.util.Map;
 public class ShoppingCart extends HttpServlet {
     static ArrayList<Product> cart = new ArrayList<>();
 
-    public void addProduct(Product product){
-        cart.add(product);
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -37,4 +33,11 @@ public class ShoppingCart extends HttpServlet {
         engine.process("product/shoppingcart.html", context, resp.getWriter());
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getParameter("removeFromCart") != null) {
+            cart.remove(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("removeFromCart"))));
+            resp.sendRedirect("/shoppingcart");
+        }
+    }
 }
