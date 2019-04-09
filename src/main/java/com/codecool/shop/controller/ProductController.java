@@ -12,7 +12,6 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,20 +20,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static com.codecool.shop.controller.ShoppingCart.cart;
-
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
-    String selectedProductValue = "None";
-
-    String selectedSupplierValue = "None";
-
-    List<Product> products;
-
+    private String selectedProductValue = "None";
+    private String selectedSupplierValue = "None";
+    private List<Product> products;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
@@ -43,30 +37,17 @@ public class ProductController extends HttpServlet {
         ProductCategory productCategory = productCategoryDataStore.getByName(selectedProductValue);
 
         try {
-            if(!selectedSupplierValue.equals("None")){
-                products = productDataStore.getBy(supplier);
-                if(!selectedProductValue.equals("None")){
-                    products = productDataStore.getBy(productCategory, supplier);
-                }
-            } else if(!selectedProductValue.equals("None")){
-                products = productDataStore.getBy(productCategory);
-            } else{
-                products = productDataStore.getAll();
-            }
-        } catch (Exception e) {}
+            getProducts(productDataStore, supplier, productCategory);
+        } catch (Exception ignored) {}
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("recipient", "World");
-        context.setVariable("category", productCategoryDataStore.getAll());
-        context.setVariable("supplier", supplierDataStore.getAll());
-        context.setVariable("products", products);
-        engine.process("product/index.html", context, resp.getWriter());
+        setVariables(resp, productCategoryDataStore, supplierDataStore, engine, context);
     }
 
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
 
         ProductDao productDataStore = ProductDaoMem.getInstance();
@@ -80,16 +61,7 @@ public class ProductController extends HttpServlet {
         ProductCategory productCategory = productCategoryDataStore.getByName(selectedProductValue);
 
 
-        if(!selectedSupplierValue.equals("None")){
-            products = productDataStore.getBy(supplier);
-            if(!selectedProductValue.equals("None")){
-                products = productDataStore.getBy(productCategory, supplier);
-            }
-        } else if(!selectedProductValue.equals("None")){
-            products = productDataStore.getBy(productCategory);
-        } else{
-            products = productDataStore.getAll();
-        }
+        getProducts(productDataStore, supplier, productCategory);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -98,6 +70,11 @@ public class ProductController extends HttpServlet {
         if (productCategoryDataStore.getAll().contains(productCategory)) {
             context.setVariable("currentCategory", productCategory);
         }
+        setVariables(resp, productCategoryDataStore, supplierDataStore, engine, context);
+
+    }
+
+    private void setVariables(HttpServletResponse resp, ProductCategoryDao productCategoryDataStore, SupplierDao supplierDataStore, TemplateEngine engine, WebContext context) throws IOException {
         context.setVariable("selectedProduct", selectedProductValue);
         context.setVariable("selectedSupplier", selectedSupplierValue);
         context.setVariable("recipient", "World");
@@ -105,6 +82,18 @@ public class ProductController extends HttpServlet {
         context.setVariable("supplier", supplierDataStore.getAll());
         context.setVariable("products", products);
         engine.process("product/index.html", context, resp.getWriter());
+    }
 
+    private void getProducts(ProductDao productDataStore, Supplier supplier, ProductCategory productCategory) {
+        if (!selectedSupplierValue.equals("None")) {
+            products = productDataStore.getBy(supplier);
+            if (!selectedProductValue.equals("None")) {
+                products = productDataStore.getBy(productCategory, supplier);
+            }
+        } else if (!selectedProductValue.equals("None")) {
+            products = productDataStore.getBy(productCategory);
+        } else {
+            products = productDataStore.getAll();
+        }
     }
 }
