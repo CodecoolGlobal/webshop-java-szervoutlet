@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 import static com.codecool.shop.controller.ShoppingCart.cart;
 
@@ -67,7 +68,6 @@ public class ProductController extends HttpServlet {
             products = productDataStore.getAll();
         }
 
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
@@ -82,10 +82,6 @@ public class ProductController extends HttpServlet {
         context.setVariable("supplier", supplierDataStore.getAll());
         context.setVariable("products", products);
         engine.process("product/index.html", context, resp.getWriter());
-    }
 
-    if (req.getParameter("addToCart") != null) {
-        cart.add(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("addToCart"))));
-        resp.sendRedirect("/");
     }
 }
