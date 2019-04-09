@@ -51,6 +51,6 @@ public class SupplierDaoMem implements SupplierDao {
                 return supp;
             }
         }
-        return data.get(0);
+        return null;
     };
 }
