@@ -26,32 +26,55 @@ import static com.codecool.shop.controller.ShoppingCart.cart;
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
+    String selectedProductValue = "None";
+
+    String selectedSupplierValue = "None";
+
+    List<Product> products;
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
+        Supplier supplier = supplierDataStore.getByName(selectedSupplierValue);
+        ProductCategory productCategory = productCategoryDataStore.getByName(selectedProductValue);
+
+        try {
+            if(!selectedSupplierValue.equals("None")){
+                products = productDataStore.getBy(supplier);
+                if(!selectedProductValue.equals("None")){
+                    products = productDataStore.getBy(productCategory, supplier);
+                }
+            } else if(!selectedProductValue.equals("None")){
+                products = productDataStore.getBy(productCategory);
+            } else{
+                products = productDataStore.getAll();
+            }
+        } catch (Exception e) {}
+
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("recipient", "World");
         context.setVariable("category", productCategoryDataStore.getAll());
         context.setVariable("supplier", supplierDataStore.getAll());
-        context.setVariable("products", productDataStore.getAll());
+        context.setVariable("products", products);
         engine.process("product/index.html", context, resp.getWriter());
     }
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Product> products;
+
 
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
-        String selectedProductValue = req.getParameter("orderByProductCategory");
-        String selectedSupplierValue = req.getParameter("orderBySupplier");
+        selectedProductValue = req.getParameter("orderByProductCategory");
+        selectedSupplierValue = req.getParameter("orderBySupplier");
 
         Supplier supplier = supplierDataStore.getByName(selectedSupplierValue);
         ProductCategory productCategory = productCategoryDataStore.getByName(selectedProductValue);
