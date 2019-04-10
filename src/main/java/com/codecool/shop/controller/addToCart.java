@@ -1,7 +1,6 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.implementation.ProductDaoMem;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +16,7 @@ public class addToCart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (req.getParameter("addToCart") != null) {
-            cart.merge(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("addToCart"))), 1, (a, b) -> a + b);
+            cart.merge(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("addToCart"))), 1, Integer::sum);
             resp.sendRedirect("/");
         }
     }
