@@ -26,12 +26,14 @@
     <!-- End of Bootstrap components -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
 
 <div class="jumbotron text-center">
-    <h1>Codecool Shop</h1>
+    <h1>SzervOutLet</h1>
 </div>
 
 <div class="container">
@@ -39,7 +41,9 @@
         <strong th:text="${currentCategory.name}">Category Title</strong>
     </div>
 
-    <div id="products" class="row">
+    <div th:replace="navbar.html :: copy"></div>
+
+    <div id="products" class="row mt-2">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
             <div class="card">
                 <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" th:alt="${prod.name}" />
@@ -81,8 +85,6 @@
         </form>
     </div>
 </div>
-
-<div><a class="btn btn-success" href="/shoppingcart">Shopping cart</a></div>
 
 <div th:replace="footer.html :: copy"></div>
 
