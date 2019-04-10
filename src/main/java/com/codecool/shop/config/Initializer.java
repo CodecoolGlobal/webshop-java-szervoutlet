@@ -65,7 +65,7 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Remanufactured Ear", 170, "USD", " Buy this ear for your grandma!! Laugh on him with your family", ear, senegal));
         productDataStore.add(new Product("Bloody Eye", 260, "USD", "Eyes for screaming all man on the metro?? There's your product!! No 10% sale", eye, sudan));
         productDataStore.add(new Product("Stressed heart", 920, "USD", "Used heart for sale, while the stocks last", heart, sudan));
-        productDataStore.add(new Product("Half ready Lungs", 920, "USD", "Used heart for sale, while the stocks last", lung, tibet));
-        productDataStore.add(new Product("calculus(veseko)", 70, "USD", "Used heart for sale, while the stocks last", kindey, marocco));
+        productDataStore.add(new Product("Half ready Lungs", 920, "USD", "Half fresh, half dead lung for the brave mens.", lung, tibet));
+        productDataStore.add(new Product("calculus(veseko)", 70, "USD", "A real jewellery for your partner, especially at the dinner.", kindey, marocco));
     }
 }
