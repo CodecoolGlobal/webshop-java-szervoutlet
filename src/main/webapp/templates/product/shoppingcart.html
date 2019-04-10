@@ -34,7 +34,7 @@
     <h1>Shopping Cart</h1>
 </div>
 
-<div th:if="${cart.isEmpty()}"><h2 align="center">Your cart is empty!</h2></div>
+<div th:if="${cart.isEmpty()}"><h2 class="text-center">Your cart is empty!</h2></div>
 
 <div class="container">
     <div id="products" class="row">
@@ -50,14 +50,19 @@
                         <p class="lead" th:text="${prod.key.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-quantity">
-                        <form action="/shoppingcart" method="POST" class="form-inline">
+                        <div class="row">
                             <label for="quantity">Quantity</label>
+                        </div>
+                        <div class="row form-inline">
+                            <form action="/shoppingcart" method="POST">
                                 <input type="hidden" name="itemId" th:value="${prod.key.getId()}">
-                                <input class="form-control" name="quantity" id="quantity" min="0" type="number" th:value="${prod.value}">
-                        </form>
-                        <form action="/shoppingcart" method="POST">
-                            <button class="btn btn-danger" type="submit" name="removeFromCart" th:value="${prod.key.getId()}">Remove</button>
-                        </form>
+                                <input type="number" name="quantity" class="form-control input-lg" id="quantity" min="0" max="999" th:value="${prod.value}">
+                                <button type="submit" class="form-control btn btn-success">Apply</button>
+                            </form>
+                            <form action="/shoppingcart" method="POST" class="form-inline">
+                                <button type="submit" class="form-control btn btn-danger" name="removeFromCart" th:value="${prod.key.getId()}">Remove all</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
