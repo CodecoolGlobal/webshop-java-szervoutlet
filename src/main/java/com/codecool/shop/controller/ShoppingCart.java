@@ -32,13 +32,16 @@ public class ShoppingCart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (req.getParameter("removeFromCart") != null) {
-            Integer count = cart.get(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("removeFromCart"))));
-            if(count == null || count == 1){
-                cart.remove(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("removeFromCart"))));
-            } else {
-                cart.put(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("removeFromCart"))), count - 1);
-            }
-            resp.sendRedirect("/shoppingcart");
+            cart.remove(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("removeFromCart"))));
         }
+        else if (!req.getParameter("quantity").isEmpty()) {
+            Product product = ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("itemId")));
+            if (Integer.parseInt(req.getParameter("quantity")) == 0) {
+                cart.remove(product);
+            } else {
+                cart.put(product, Integer.parseInt(req.getParameter("quantity")));
+            }
+        }
+        resp.sendRedirect("/shoppingcart");
     }
 }
