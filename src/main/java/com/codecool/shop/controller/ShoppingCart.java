@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
+
 @WebServlet(urlPatterns = {"/shoppingcart"})
 public class ShoppingCart extends HttpServlet {
     static HashMap<Product, Integer> cart = new HashMap<>();
