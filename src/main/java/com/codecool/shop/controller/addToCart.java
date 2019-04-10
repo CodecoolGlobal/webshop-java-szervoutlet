@@ -17,7 +17,7 @@ public class addToCart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (req.getParameter("addToCart") != null) {
-            cart.add(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("addToCart"))));
+            cart.merge(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("addToCart"))), 1, (a, b) -> a + b);
             resp.sendRedirect("/");
         }
     }

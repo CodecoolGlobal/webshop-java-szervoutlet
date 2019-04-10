@@ -38,20 +38,23 @@
 
 <div class="container">
     <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${cart}">
+        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod: ${cart}">
             <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.key.id} + '.jpg'" alt="" />
                 <div class="card-header">
-                    <h4 class="card-title" th:text="${prod.getName()}">Product name</h4>
-                    <p class="card-text" th:text="${prod.getDescription()}">Product description... </p>
+                    <h4 class="card-title" th:text="${prod.key.getName()}">Product name</h4>
+                    <p class="card-text" th:text="${prod.key.getDescription()}">Product description... </p>
                 </div>
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                        <p class="lead" th:text="${prod.key.getPrice()}">100 USD</p>
+                    </div>
+                    <div class="card-quantity">
+                        <p class="lead" th:text="${prod.value}">1 piece</p>
                     </div>
                     <div class="card-text">
                         <form action="/shoppingcart" method="POST">
-                            <button class="btn btn-success" type="submit" name="removeFromCart" th:value="${prod.getId()}">Remove</button>
+                            <button class="btn btn-success" type="submit" name="removeFromCart" th:value="${prod.key.getId()}">Remove</button>
                         </form>
                     </div>
                 </div>
