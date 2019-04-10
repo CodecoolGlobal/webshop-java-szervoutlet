@@ -26,6 +26,8 @@
     <!-- End of Bootstrap components -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -37,7 +39,8 @@
 <div th:if="${cart.isEmpty()}"><h2 class="text-center">Your cart is empty!</h2></div>
 
 <div class="container">
-    <div id="products" class="row">
+<div th:replace="navbar.html :: copy"></div>
+    <div id="products" class="row mt-2">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod: ${cart}">
             <div class="card">
                 <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.key.getId()} + '.jpg'" alt="" />
@@ -69,8 +72,6 @@
         </div>
     </div>
 </div>
-
-<div><a class="btn btn-success" href="/">Home</a></div>
 
 <div th:replace="footer.html :: copy"></div>
 
