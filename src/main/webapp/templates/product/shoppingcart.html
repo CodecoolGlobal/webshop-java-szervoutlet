@@ -36,10 +36,9 @@
     <h1>Shopping Cart</h1>
 </div>
 
-<div th:if="${cart.isEmpty()}"><h2 class="text-center">Your cart is empty!</h2></div>
-
 <div class="container">
 <div th:replace="navbar.html :: copy"></div>
+<div th:if="${cart.isEmpty()}"><h2 class="text-center mt-5">Your cart is empty!</h2></div>
     <div id="products" class="row mt-2">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod: ${cart}">
             <div class="card">
