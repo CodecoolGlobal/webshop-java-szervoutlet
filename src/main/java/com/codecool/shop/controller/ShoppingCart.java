@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-
+import java.util.Map;
 
 
 @WebServlet(urlPatterns = {"/shoppingcart"})
@@ -25,7 +25,13 @@ public class ShoppingCart extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("recipient", "World");
         context.setVariable("cart", cart);
+        float sumOfProductPrices = 0.0f;
+        for(Map.Entry<Product, Integer> entry: cart.entrySet()){
+            sumOfProductPrices += entry.getKey().getDefaultPrice()*entry.getValue();
+        }
+        context.setVariable("sumOfProductValues", sumOfProductPrices);
         engine.process("product/shoppingcart.html", context, resp.getWriter());
+
     }
 
 

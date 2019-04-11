@@ -22,6 +22,9 @@ public class OrderDetails extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+        context.setVariable("recipient", "World");
+        engine.process("product/orderdetails.html", context, resp.getWriter());
     }
 }
