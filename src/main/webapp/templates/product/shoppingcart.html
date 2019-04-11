@@ -64,11 +64,11 @@
                                 <input type="hidden" name="itemId" th:value="${prod.key.getId()}">
                                 <input type="number" name="quantity" class="form-control input-lg" id="quantity" min="0"
                                        max="999" th:value="${prod.value}">
-                                <button type="submit" class="form-control btn btn-success">Apply</button>
+                                <button type="submit" class="form-control btn btn-success"><i class="fas fa-check"></i> Apply</button>
                             </form>
                             <form action="/shoppingcart" method="POST" class="form-inline">
                                 <button type="submit" class="form-control btn btn-danger" name="removeFromCart"
-                                        th:value="${prod.key.getId()}">Remove all
+                                        th:value="${prod.key.getId()}"><i class="fas fa-trash"></i> Remove all
                                 </button>
                             </form>
                         </div>
@@ -82,7 +82,7 @@
             th:text="'Total: ' + ${#numbers.formatDecimal(sumOfProductValues,  0, 'COMMA', 2, 'POINT')} + ' USD'">
             Sum: </h2>
         <form style="text-align: center" action="/orderdetails" method="GET">
-            <button class="btn btn-success" type="submit" name="orderdetails">Checkout</button>
+            <button class="btn btn-success" type="submit" name="orderdetails"><i class="fas fa-clipboard-check"></i> Checkout</button>
         </form>
     </div>
     <div th:replace="footer.html :: copy"></div>
