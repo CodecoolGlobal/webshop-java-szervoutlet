@@ -111,7 +111,7 @@ body, html {
 }
 
 #footer {
-    margin 15px auto;
+    margin: 15px auto;
     text-align: center;
     text-transform: uppercase;
 }
@@ -123,4 +123,8 @@ body, html {
 
 #brand {
     height: 300px;
+}
+
+.orderConatiner{
+    background-color: rgba(255, 255, 255, 0.94);
 }

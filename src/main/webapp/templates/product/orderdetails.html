@@ -36,9 +36,7 @@
     <h1>Order Details</h1>
 </div>
 <div class="background-image"></div>
-<div class="container">
-    <div th:replace="navbar.html :: copy"></div>
-    <br>
+<div class="container orderConatiner">
     <form>
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -92,7 +90,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Checkout</button>
     </form>
-    <br>
 
     <div th:replace="footer.html :: copy"></div>
 </div>
