@@ -55,9 +55,9 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.add(lung);
 
         //setting up products and printing it
-        productDataStore.add(new Product("Stock Brain", 1000, "USD", "Traditional central processing unit of a Human body", brain, marocco));
-        productDataStore.add(new Product("Almost new Liver", 750, "USD", "Freshly imported liver, package damaged. Self-healing item!", liver, burkina));
-        productDataStore.add(new Product("Kidney", 400, "USD", "50% OFF", kindey, burkina));
+        productDataStore.add(new Product("Stock Brain", 1000.12f, "USD", "Traditional central processing unit of a Human body", brain, marocco));
+        productDataStore.add(new Product("Almost new Liver", 750.99f, "USD", "Freshly imported liver, package damaged. Self-healing item!", liver, burkina));
+        productDataStore.add(new Product("Kidney", 400.23f, "USD", "50% OFF", kindey, burkina));
         productDataStore.add(new Product("Bionic heart", 1900, "USD", "Send a heart for your friend now in real life, not just on the Messenger!", heart, mozambic));
         productDataStore.add(new Product("Left pitvar", 190, "USD", "Left pitvar for everyone! Fresh, new from Burkina Faso. Just with gifted tounqe!!!", heart, senegal));
         productDataStore.add(new Product("Eyes", 470, "USD", "Behind blue eyes! - The Who!!!", eye, tibet));

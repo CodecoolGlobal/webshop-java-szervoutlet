@@ -37,9 +37,7 @@
 </div>
 
 <div class="container">
-    <div th:replace="navbar.html :: copy"></div>
-    <br>
-    <form>
+    <form class="mt-5">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputFirstName">First name</label>
@@ -92,10 +90,9 @@
         </div>
         <button type="submit" class="btn btn-primary">Checkout</button>
     </form>
-    <br>
-</div>
 
-<div th:replace="footer.html :: copy"></div>
+    <div th:replace="footer.html :: copy"></div>
+</div>
 
 </body>
 </html>
