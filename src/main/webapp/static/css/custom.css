@@ -82,7 +82,6 @@ body, html {
     background-size: cover;
     filter: blur(8px);
     -webkit-filter: blur(8px);
-
 }
 
 .container {
@@ -93,6 +92,8 @@ body, html {
 .jumbotron {
     z-index: 3;
     position: sticky;
+    background-image: linear-gradient(salmon, white);
+    padding: 2em!important;
 }
 
 .productImg {
@@ -111,15 +112,11 @@ body, html {
 }
 
 #footer {
-    margin 15px auto;
+    margin: 15px auto;
     text-align: center;
     text-transform: uppercase;
 }
 
-.jumbotron {
-    background-image: linear-gradient(salmon, white);
-    padding: 2em!important;
-}
 
 #brand {
     height: 300px;
