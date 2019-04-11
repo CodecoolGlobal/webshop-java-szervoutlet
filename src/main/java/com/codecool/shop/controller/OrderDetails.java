@@ -25,6 +25,6 @@ public class OrderDetails extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("recipient", "World");
-        engine.process("product/orderdetails.html", context, resp.getWriter());
+        engine.process("product/under-construction.html", context, resp.getWriter());
     }
 }

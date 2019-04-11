@@ -37,7 +37,7 @@
 </div>
 <div class="background-image"></div>
 <div class="container">
-    <form class="mt-5">
+    <form class="mt-5" action="/orderdetails" method="POST">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputFirstName">First name</label>
@@ -88,7 +88,7 @@
                 </label>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Checkout</button>
+            <button type="submit" class="btn btn-primary">Checkout</button>
     </form>
 
     <div th:replace="footer.html :: copy"></div>
