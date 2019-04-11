@@ -115,9 +115,11 @@ body, html {
     text-transform: uppercase;
 }
 
+.jumbotron {
+    background-image: linear-gradient(salmon, white);
+    padding: 2em!important;
+}
 
-
-
-
-
-
+#brand {
+    height: 300px;
+}
