@@ -55,17 +55,17 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.add(lung);
 
         //setting up products and printing it
-        productDataStore.add(new Product("Stock Brain", 1000.12f, "USD", "Traditional central processing unit of a Human body", brain, marocco));
-        productDataStore.add(new Product("Almost new Liver", 750.99f, "USD", "Freshly imported liver, package damaged. Self-healing item!", liver, burkina));
-        productDataStore.add(new Product("Kidney", 400.23f, "USD", "50% OFF", kindey, burkina));
+        productDataStore.add(new Product("Stock Brain", 1000, "USD", "Traditional central processing unit of a Human body", brain, marocco));
+        productDataStore.add(new Product("Almost new Liver", 749.99f, "USD", "Freshly imported liver, package damaged. Self-healing item!", liver, burkina));
+        productDataStore.add(new Product("Kidney", 399.99f, "USD", "50% OFF", kindey, burkina));
         productDataStore.add(new Product("Bionic heart", 1900, "USD", "Send a heart for your friend now in real life, not just on the Messenger!", heart, mozambic));
-        productDataStore.add(new Product("Left pitvar", 190, "USD", "Left pitvar for everyone! Fresh, new from Burkina Faso. Just with gifted tounqe!!!", heart, senegal));
-        productDataStore.add(new Product("Eyes", 470, "USD", "Behind blue eyes! - The Who!!!", eye, tibet));
-        productDataStore.add(new Product("Ear", 470, "USD", "Your grandma didn't hear that you make embarrassing comments for his shape? Just buy an ear and wait for the big lovely slap ", ear, mozambic));
+        productDataStore.add(new Product("Left pitvar", 189.99f, "USD", "Left pitvar for everyone! Fresh, new from Burkina Faso. Just with gifted tounqe!!!", heart, senegal));
+        productDataStore.add(new Product("Eyes", 469.75f, "USD", "Behind blue eyes! - The Who!!!", eye, tibet));
+        productDataStore.add(new Product("Ear", 439.99f, "USD", "Your grandma didn't hear that you make embarrassing comments for his shape? Just buy an ear and wait for the big lovely slap ", ear, mozambic));
         productDataStore.add(new Product("Remanufactured Ear", 170, "USD", " Buy this ear for your grandma!! Laugh on him with your family", ear, senegal));
-        productDataStore.add(new Product("Bloody Eye", 260, "USD", "Eyes for screaming all man on the metro?? There's your product!! No 10% sale", eye, sudan));
+        productDataStore.add(new Product("Bloody Eye", 259.99f, "USD", "Eyes for screaming all man on the metro?? There's your product!! Now 10% sale", eye, sudan));
         productDataStore.add(new Product("Stressed heart", 920, "USD", "Used heart for sale, while the stocks last", heart, sudan));
         productDataStore.add(new Product("Half ready Lungs", 920, "USD", "Half fresh, half dead lung for the brave mens.", lung, tibet));
-        productDataStore.add(new Product("calculus(veseko)", 70, "USD", "A real jewellery for your partner, especially at the dinner.", kindey, marocco));
+        productDataStore.add(new Product("calculus(veseko)", 69.99f, "USD", "A real jewellery for your partner, especially at the dinner.", kindey, marocco));
     }
 }
