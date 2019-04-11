@@ -57,16 +57,20 @@
                     <div class="card-text">
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
-                    <div class="card-text">
-                        <form action="/addToCart" method="POST">
-                            <button class="btn btn-success" type="submit" name="addToCart" th:value="${prod.getId()}"><i class="fas fa-cart-plus"></i> Add to cart</button>
-                        </form>
+                    <div class="row form-inline">
+                        <div class="card-text">
+                            <form action="/addToCart" method="POST">
+                                <input type="hidden" name="itemId" th:value="${prod.getId()}">
+                                <input type="number" name="quantity" class="form-control input-lg" id="quantity" min="0"
+                                       max="999" th:value="0">
+                                <button class="btn btn-success" type="submit"><i class="fas fa-cart-plus"></i> Add to cart</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
 <div th:replace="footer.html :: copy"></div>
 
