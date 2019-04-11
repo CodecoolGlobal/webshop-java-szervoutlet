@@ -5,7 +5,7 @@
     <meta name="author" content="Codecool" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <title>Codecool Shop</title>
+    <title>SzervOutLet</title>
 
     <!-- Bootstrap components -->
     <!-- Latest compiled and minified Jquery -->
@@ -59,33 +59,14 @@
                     </div>
                     <div class="card-text">
                         <form action="/addToCart" method="POST">
-                            <button class="btn btn-success" type="submit" name="addToCart" th:value="${prod.getId()}">Add to cart</button>
+                            <button class="btn btn-success" type="submit" name="addToCart" th:value="${prod.getId()}"><i class="fas fa-cart-plus"></i> Add to cart</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="sort-form" class="styled-select blue semi-square">
-        <form action="/" method="POST">
-            <p style="font-weight: bold">Sort by Product Category/Supplier:</p>
-            <select id="orderBy_productCategory" name="orderByProductCategory" >
-                <option value="None" th:if="${selectedProduct}=='None'" selected>None</option>
-                <option value="None" th:if="${selectedProduct}!='None'">None</option>
-                <option th:each="prodCat,iterStat : ${category}" th:text="${prodCat.name}" th:value="${prodCat.name}" th:if="${selectedProduct}==${prodCat.name}" selected>Product name</option>
-                <option th:each="prodCat,iterStat : ${category}" th:text="${prodCat.name}" th:value="${prodCat.name}" th:if="${selectedProduct}!=${prodCat.name}">Product name</option>
-            </select>
 
-            <select id="orderBy_supplier" name="orderBySupplier">
-                <option value="None" th:if="${selectedSupplier}=='None'" selected>None</option>
-                <option value="None" th:if="${selectedSupplier}!='None'">None</option>
-                <option th:each="supp,iterStat : ${supplier}" th:text="${supp.name}" th:value="${supp.name}" th:if="${selectedSupplier}==${supp.name}" selected>Supplier name</option>
-                <option th:each="supp,iterStat : ${supplier}" th:text="${supp.name}" th:value="${supp.name}" th:if="${selectedSupplier}!=${supp.name}">Supplier name</option>
-            </select>
-            <button type="submit" name="order_direction"
-                    value="asc" title="Ascending order"><i class="fa fa-sort-amount-asc"></i>Sort</button>
-        </form>
-    </div>
 
 <div th:replace="footer.html :: copy"></div>
 

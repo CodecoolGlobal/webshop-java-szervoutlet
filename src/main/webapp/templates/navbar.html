@@ -14,13 +14,25 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
+                        <div id="sort-form" class="nav-link styled-select blue semi-square">
+                            <form action="/" method="POST">
+                                <select id="orderBy_productCategory" name="orderByProductCategory">
+                                    <option value="None" th:if="${selectedProduct}=='None'" selected>None</option>
+                                    <option value="None" th:if="${selectedProduct}!='None'">None</option>
+                                    <option th:each="prodCat,iterStat : ${category}" th:text="${prodCat.name}" th:value="${prodCat.name}" th:if="${selectedProduct}==${prodCat.name}" selected>Product name</option>
+                                    <option th:each="prodCat,iterStat : ${category}" th:text="${prodCat.name}" th:value="${prodCat.name}" th:if="${selectedProduct}!=${prodCat.name}">Product name</option>
+                                </select>
+
+                                <select id="orderBy_supplier" name="orderBySupplier">
+                                    <option value="None" th:if="${selectedSupplier}=='None'" selected>None</option>
+                                    <option value="None" th:if="${selectedSupplier}!='None'">None</option>
+                                    <option th:each="supp,iterStat : ${supplier}" th:text="${supp.name}" th:value="${supp.name}" th:if="${selectedSupplier}==${supp.name}" selected>Supplier name</option>
+                                    <option th:each="supp,iterStat : ${supplier}" th:text="${supp.name}" th:value="${supp.name}" th:if="${selectedSupplier}!=${supp.name}">Supplier name</option>
+                                </select>
+                                <button type="submit" name="order_direction"
+                                        value="asc" title="Ascending order"><i class="fa fa-sort-amount-asc"></i>Sort</button>
+                            </form>
+                        </div>
                     </li>
                 </ul>
                 <span class="navbar-text">Always good to have savings... </span>
