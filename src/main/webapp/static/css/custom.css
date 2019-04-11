@@ -110,9 +110,17 @@ body, html {
     margin-bottom: 30px;
 }
 
+#footer {
+    margin 15px auto;
+    text-align: center;
+    text-transform: uppercase;
+}
 
+.jumbotron {
+    background-image: linear-gradient(salmon, white);
+    padding: 2em!important;
+}
 
-
-
-
-
+#brand {
+    height: 300px;
+}
