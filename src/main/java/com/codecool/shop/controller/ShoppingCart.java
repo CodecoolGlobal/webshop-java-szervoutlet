@@ -37,8 +37,8 @@ public class ShoppingCart extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        if (req.getParameter("removeFromCart") != null) {
-            cart.remove(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("removeFromCart"))));
+        if (isRemoveAllButtonClicked(req)) {
+            removeChoosenProductFromCart(req);
         }
         else if (!req.getParameter("quantity").isEmpty()) {
             Product product = ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("itemId")));
@@ -49,5 +49,13 @@ public class ShoppingCart extends HttpServlet {
             }
         }
         resp.sendRedirect("/shoppingcart");
+    }
+
+    private boolean isRemoveAllButtonClicked(HttpServletRequest req) {
+        return req.getParameter("removeFromCart") != null;
+    }
+
+    private void removeChoosenProductFromCart(HttpServletRequest req) {
+        cart.remove(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("removeFromCart"))));
     }
 }

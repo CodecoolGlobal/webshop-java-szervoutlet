@@ -62,7 +62,7 @@
                             <form action="/addToCart" method="POST">
                                 <input type="hidden" name="itemId" th:value="${prod.getId()}">
                                 <input type="number" name="quantity" class="form-control input-lg" id="quantity" min="0"
-                                       max="999" th:value="0">
+                                       max="999" th:value="1">
                                 <button class="btn btn-success" type="submit"><i class="fas fa-cart-plus"></i> Add to cart</button>
                             </form>
                         </div>

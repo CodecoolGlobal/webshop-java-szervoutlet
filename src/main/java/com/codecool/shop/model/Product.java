@@ -2,7 +2,7 @@ package com.codecool.shop.model;
 
 import java.util.Currency;
 
-public class Product extends BaseModel {
+public class    Product extends BaseModel {
 
     private float defaultPrice;
     private Currency defaultCurrency;
