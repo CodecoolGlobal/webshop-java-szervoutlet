@@ -37,6 +37,7 @@ public class Initializer implements ServletContextListener {
         Supplier sudan = new Supplier("West Sudan", "Asian high quality from the goats");
         supplierDataStore.add(sudan);
 
+    String query = 'INSERT INTO '
 
         //setting up a new product category
         ProductCategory eye = new ProductCategory("Eye", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
