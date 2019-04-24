@@ -1,18 +1,18 @@
-DROP TABLE IF EXISTS products;
-DROP TABLE IF EXISTS supplier;
-DROP TABLE IF EXISTS product_category;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS cart;
+-- DROP TABLE IF EXISTS products;
+-- DROP TABLE IF EXISTS supplier;
+-- DROP TABLE IF EXISTS product_category;
+-- DROP TABLE IF EXISTS users;
+-- DROP TABLE IF EXISTS cart;
 
 CREATE TABLE products
 (
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(50),
     default_price FLOAT,
-    currency VARCHAR(3) NOT NULL,
+    currency VARCHAR(3) DEFAULT 'USD' NOT NULL,
     description VARCHAR(250),
-    supplier INTEGER,
-    product_category INTEGER
+    supplier INTEGER DEFAULT 1,
+    product_category INTEGER DEFAULT 1
 );
 
 CREATE TABLE supplier
