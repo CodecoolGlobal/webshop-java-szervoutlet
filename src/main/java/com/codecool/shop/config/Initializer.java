@@ -1,5 +1,6 @@
 package com.codecool.shop.config;
 
+import com.codecool.shop.dao.DatabaseDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
@@ -13,9 +14,39 @@ import com.codecool.shop.model.Supplier;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import javax.xml.crypto.Data;
+import java.sql.SQLException;
 
 @WebListener
 public class Initializer implements ServletContextListener {
+    private static DatabaseDao databaseDao;
+
+    public void setUp(){
+        databaseDao = new DatabaseDao();
+    }
+
+    public void insertIntoTable(String table, String[] args) {
+
+        switch (table) {
+            case "supplier":
+                try {
+                    databaseDao.executeUpdate("INSERT INTO supplier VALUES("+args[0]+","+args[1]+")");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "products":
+
+                break;
+            case "users":
+
+                break;
+            case "cart":
+
+                break;
+        }
+
+    }
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -25,7 +56,7 @@ public class Initializer implements ServletContextListener {
 
         //setting up a new supplier
         Supplier burkina = new Supplier("Burkina Faso", "From the heart of the West Africa");
-        supplierDataStore.add(burkina);
+        insertIntoTable("supplier", new String[]{"Burkina Faso","From the heart of the West Africa"} );
         Supplier senegal = new Supplier("South Senegal", "From the heart of the South Africa");
         supplierDataStore.add(senegal);
         Supplier mozambic = new Supplier("Mozambic", "From the heart of Mozambic");
@@ -37,7 +68,6 @@ public class Initializer implements ServletContextListener {
         Supplier sudan = new Supplier("West Sudan", "Asian high quality from the goats");
         supplierDataStore.add(sudan);
 
-    String query = 'INSERT INTO '
 
         //setting up a new product category
         ProductCategory eye = new ProductCategory("Eye", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
@@ -72,4 +102,5 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Stomach", 999.99f, "USD", "If you dont want to spend a lot of money for food, that is your product! Buy it and save 1million USD/year!.", liver, marocco));
         productDataStore.add(new Product("Kidney with Iphone", 299.99f, "USD", "A real jewellery for your partner, especially at the dinner.", kindey, senegal));
     }
+
 }
