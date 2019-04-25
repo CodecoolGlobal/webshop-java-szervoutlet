@@ -14,17 +14,19 @@ public class OrderDetails extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        setUpWebContexts(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException  {
+        setUpWebContexts(req, resp);
+    }
+
+
+    public void setUpWebContexts(HttpServletRequest req,HttpServletResponse resp) throws IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("recipient", "World");
         engine.process("product/orderdetails.html", context, resp.getWriter());
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-        WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("recipient", "World");
-        engine.process("product/under-construction.html", context, resp.getWriter());
     }
 }
