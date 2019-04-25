@@ -44,7 +44,8 @@ CREATE TABLE cart
 (
     id         SERIAL PRIMARY KEY NOT NULL,
     product_id INTEGER,
-    user_id    INTEGER            NOT NULL
+    user_id    INTEGER            NOT NULL,
+    quantity   INTEGER
 );
 
 
