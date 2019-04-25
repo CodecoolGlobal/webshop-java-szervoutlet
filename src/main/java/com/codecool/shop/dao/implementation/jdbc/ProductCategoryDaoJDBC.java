@@ -12,6 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductCategoryDaoJDBC extends DatabaseDao implements ProductCategoryDao {
+
+    private static ProductCategoryDaoJDBC instance = null;
+
+    private ProductCategoryDaoJDBC() {
+    }
+
+    public static ProductCategoryDaoJDBC getInstance() {
+        if (instance == null) {
+            instance = new ProductCategoryDaoJDBC();
+        }
+        return instance;
+    }
+
     @Override
     public void add(ProductCategory category) {
         String query = String.format("INSERT INTO product_category(name, department, description)VALUES ('%s', '%s', '%s');", category.getName(), category.getDepartment(), category.getDescription());

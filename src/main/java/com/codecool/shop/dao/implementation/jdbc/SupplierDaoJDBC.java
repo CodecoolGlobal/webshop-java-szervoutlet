@@ -10,6 +10,18 @@ import java.util.List;
 
 public class SupplierDaoJDBC extends DatabaseDao implements SupplierDao {
 
+    private static SupplierDaoJDBC instance = null;
+
+    private SupplierDaoJDBC() {
+    }
+
+    public static SupplierDaoJDBC getInstance() {
+        if (instance == null) {
+            instance = new SupplierDaoJDBC();
+        }
+        return instance;
+    }
+
     @Override
     public void add(Supplier supplier) {
         String query = String.format("INSERT INTO supplier(name, description)VALUES ('%s', '%s');", supplier.getName(), supplier.getDescription());

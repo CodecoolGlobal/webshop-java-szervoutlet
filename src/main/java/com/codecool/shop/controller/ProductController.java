@@ -28,7 +28,7 @@ public class ProductController extends HttpServlet {
     private String selectedSupplierValue = "None";
     private List<Product> products;
 
-    ProductDaoJDBC productDaoJDBC = new ProductDaoJDBC();
+    ProductDaoJDBC productDaoJDBC = ProductDaoJDBC.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -92,12 +92,12 @@ public class ProductController extends HttpServlet {
         if (!selectedSupplierValue.equals("None")) {
             products = productDaoJDBC.getBy(supplier);
             if (!selectedProductValue.equals("None")) {
-                products = productDataStore.getBy(productCategory, supplier);
+                products = productDaoJDBC.getBy(productCategory, supplier);
             }
         } else if (!selectedProductValue.equals("None")) {
-            products = productDataStore.getBy(productCategory);
+            products = productDaoJDBC.getBy(productCategory);
         } else {
-            products = productDataStore.getAll();
+            products = productDaoJDBC.getAll();
         }
     }
 }
