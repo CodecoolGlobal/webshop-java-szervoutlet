@@ -40,14 +40,7 @@ public class ShoppingCart extends HttpServlet {
         if (isRemoveAllButtonClicked(req)) {
             removeChoosenProductFromCart(req);
         }
-        else if (!req.getParameter("quantity").isEmpty()) {
-            Product product = ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("itemId")));
-            if (Integer.parseInt(req.getParameter("quantity")) == 0) {
-                cart.remove(product);
-            } else {
-                cart.put(product, Integer.parseInt(req.getParameter("quantity")));
-            }
-        }
+        else addToCart.getCartProductQuantity(req);
         resp.sendRedirect("/shoppingcart");
     }
 

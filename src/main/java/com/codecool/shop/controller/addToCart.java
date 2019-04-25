@@ -20,7 +20,14 @@ public class addToCart extends HttpServlet {
         if (req.getParameter("removeFromCart") != null) {
             cart.remove(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("removeFromCart"))));
         }
-        else if (!req.getParameter("quantity").isEmpty()) {
+        else {
+            getCartProductQuantity(req);
+        }
+        resp.sendRedirect("/");
+    }
+
+    static void getCartProductQuantity(HttpServletRequest req) {
+        if (!req.getParameter("quantity").isEmpty()) {
             Product product = ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("itemId")));
             if (Integer.parseInt(req.getParameter("quantity")) == 0) {
                 cart.remove(product);
@@ -28,6 +35,5 @@ public class addToCart extends HttpServlet {
                 cart.put(product, Integer.parseInt(req.getParameter("quantity")));
             }
         }
-        resp.sendRedirect("/");
     }
 }

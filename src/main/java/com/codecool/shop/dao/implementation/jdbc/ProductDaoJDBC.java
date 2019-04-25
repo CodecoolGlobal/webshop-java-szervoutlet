@@ -1,11 +1,7 @@
 package com.codecool.shop.dao.implementation.jdbc;
 
 import com.codecool.shop.dao.DatabaseDao;
-import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -117,36 +113,17 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
     public List<Product> getBy(Supplier supplier) {
         String query = "SELECT * FROM products WHERE supplier ='" + supplier.getId() + "';";
 
-        List<Product> resultList = new ArrayList<>();
-
-        try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ){
-            while (resultSet.next()){
-                Product product = new Product(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getFloat("default_price"),
-                        resultSet.getString("currency"),
-                        resultSet.getString("description"),
-                        productCategoryDaoJDBC.find(resultSet.getInt("product_category")),
-                        supplierDaoJDBC.find(resultSet.getInt("supplier")));
-                resultList.add(product);
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return resultList;
+        return getProducts(query);
     }
 
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
         String query = "SELECT * FROM products WHERE product_category ='" + productCategory.getId() + "';";
 
+        return getProducts(query);
+    }
+
+    private List<Product> getProducts(String query) {
         List<Product> resultList = new ArrayList<>();
 
         try (Connection connection = getConnection();
@@ -177,29 +154,6 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
     public List<Product> getBy(ProductCategory productCategory, Supplier supplier) {
         String query = "SELECT * FROM products WHERE product_category ='" + productCategory.getId() + "'AND supplier ='" + supplier.getId() +"';";
 
-        List<Product> resultList = new ArrayList<>();
-
-        try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ){
-            while (resultSet.next()){
-                Product product = new Product(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getFloat("default_price"),
-                        resultSet.getString("currency"),
-                        resultSet.getString("description"),
-                        productCategoryDaoJDBC.find(resultSet.getInt("product_category")),
-                        supplierDaoJDBC.find(resultSet.getInt("supplier")));
-                resultList.add(product);
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return resultList;
+        return getProducts(query);
     }
 }
