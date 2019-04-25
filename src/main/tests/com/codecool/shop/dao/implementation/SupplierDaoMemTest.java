@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SupplierDaoMemTest {
 
-    private Supplier testSupplier = new Supplier("Test", "TestSupplier");
+    private Supplier testSupplier = new Supplier(0,"Test", "TestSupplier");
 
     @BeforeEach
     void setTestSupplier(){
