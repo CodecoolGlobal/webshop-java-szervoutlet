@@ -7,17 +7,13 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CartDaoJDBC extends DatabaseDao implements ProductDao {
 
-    ProductCategoryDaoJDBC productCategoryDaoJDBC = ProductCategoryDaoJDBC.getInstance();
-    SupplierDaoJDBC supplierDaoJDBC = SupplierDaoJDBC.getInstance();
+    ProductDaoJDBC productDaoJDBC = ProductDaoJDBC.getInstance();
 
     private static CartDaoJDBC instance = null;
 
@@ -68,32 +64,8 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
 
     @Override
     public List<Product> getAll() {
-        String query = "SELECT * FROM products WHERE quantity > 0;";
-
-        List<Product> resultList = new ArrayList<>();
-
-        try (Connection connection = getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)
-        ) {
-            while (resultSet.next()) {
-                Product product = new Product(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getFloat("default_price"),
-                        resultSet.getString("currency"),
-                        resultSet.getString("description"),
-                        productCategoryDaoJDBC.find(resultSet.getInt("product_category")),
-                        supplierDaoJDBC.find(resultSet.getInt("supplier")),
-                        resultSet.getInt("quantity"));
-                resultList.add(product);
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        List<Product> resultList = new ArrayList<>(productDaoJDBC.getAll());
+        resultList.removeIf( product -> product.getQuantity() == 0);
         return resultList;
     }
 
