@@ -4,62 +4,75 @@ DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS product_category;
 DROP TABLE IF EXISTS supplier;
 
-CREATE TABLE products
+create schema public;
+
+comment on schema public is 'standard public schema';
+
+alter schema public owner to postgres;
+
+create table if not exists supplier
 (
-    id               SERIAL PRIMARY KEY       NOT NULL,
-    name             VARCHAR(50),
-    default_price    FLOAT,
-    currency         VARCHAR(3) DEFAULT 'USD' NOT NULL,
-    description      VARCHAR(250),
-    supplier         INTEGER    DEFAULT 1,
-    product_category INTEGER    DEFAULT 1
+    id          serial not null
+        constraint supplier_pkey
+            primary key,
+    name        varchar(50),
+    description varchar(125)
 );
 
-CREATE TABLE supplier
+alter table supplier
+    owner to postgres;
+
+create table if not exists product_category
 (
-    id          SERIAL PRIMARY KEY NOT NULL,
-    name        VARCHAR(50),
-    description VARCHAR(125)
+    id          serial not null
+        constraint product_category_pkey
+            primary key,
+    name        varchar(50),
+    department  varchar(25),
+    description varchar(125)
 );
 
-CREATE TABLE product_category
+alter table product_category
+    owner to postgres;
+
+create table if not exists products
 (
-    id          SERIAL PRIMARY KEY NOT NULL,
-    name        VARCHAR(50),
-    department  VARCHAR(25),
-    description VARCHAR(125)
+    id               serial                                      not null
+        constraint products_pkey
+            primary key,
+    name             varchar(50),
+    default_price    double precision,
+    currency         varchar(3) default 'USD'::character varying not null,
+    description      varchar(250),
+    supplier         integer    default 1
+        constraint fk_supplier
+            references supplier,
+    product_category integer    default 1
+        constraint fk_product_category
+            references product_category,
+    quantity         integer    default 0
 );
 
-CREATE TABLE users
+alter table products
+    owner to postgres;
+
+create table if not exists users
 (
-    id               SERIAL PRIMARY KEY NOT NULL,
-    email            TEXT               NOT NULL UNIQUE,
-    password         TEXT               NOT NULL,
-    phone_number     INTEGER,
-    billing_address  TEXT,
-    shipping_address TEXT
+    id               serial not null
+        constraint users_pkey
+            primary key,
+    email            text   not null
+        constraint users_email_key
+            unique,
+    password         text   not null,
+    phone_number     integer,
+    billing_address  text,
+    shipping_address text
 );
 
-CREATE TABLE cart
-(
-    id         SERIAL PRIMARY KEY NOT NULL,
-    product_id INTEGER,
-    user_id    INTEGER            NOT NULL,
-    quantity   INTEGER
-);
+alter table users
+    owner to postgres;
 
-
-ALTER TABLE ONLY products
-    ADD CONSTRAINT fk_supplier FOREIGN KEY (supplier) REFERENCES supplier (id);
-
-ALTER TABLE ONLY products
-    ADD CONSTRAINT fk_product_category FOREIGN KEY (product_category) REFERENCES product_category (id);
-
-ALTER TABLE ONLY cart
-    ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES products (id);
-
-ALTER TABLE ONLY cart
-    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (id);
 
 
 INSERT INTO product_category(name, department, description)
