@@ -1,7 +1,11 @@
 package com.codecool.shop.dao.implementation.jdbc;
 
 import com.codecool.shop.dao.DatabaseDao;
+import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -15,6 +19,8 @@ import java.util.List;
 
 public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
 
+    ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+    SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
     @Override
     public void add(Product product) {
@@ -40,8 +46,8 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
                         resultSet.getFloat("default price"),
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
-                        resultSet.getInt("product category"),
-                        resultSet.getInt("supplier"));
+                        productCategoryDataStore.find(resultSet.getInt("product category")),
+                        supplierDataStore.find(resultSet.getInt("supplier")));
             } else {
                 return null;
             }
@@ -78,8 +84,8 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
                         resultSet.getFloat("default price"),
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
-                        resultSet.getInt("product category"),
-                        resultSet.getInt("supplier"));
+                        productCategoryDataStore.find(resultSet.getInt("product category")),
+                        supplierDataStore.find(resultSet.getInt("supplier")));
                 resultList.add(actualProduct);
             }
 

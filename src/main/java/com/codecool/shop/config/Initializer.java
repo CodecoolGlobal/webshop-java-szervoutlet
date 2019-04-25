@@ -25,28 +25,6 @@ public class Initializer implements ServletContextListener {
         databaseDao = new DatabaseDao();
     }
 
-    public void insertIntoTable(String table, String[] args) {
-
-        switch (table) {
-            case "supplier":
-                try {
-                    databaseDao.executeUpdate("INSERT INTO supplier VALUES("+args[0]+","+args[1]+")");
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "products":
-
-                break;
-            case "users":
-
-                break;
-            case "cart":
-
-                break;
-        }
-
-    }
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -56,7 +34,6 @@ public class Initializer implements ServletContextListener {
 
         //setting up a new supplier
         Supplier burkina = new Supplier("Burkina Faso", "From the heart of the West Africa");
-        insertIntoTable("supplier", new String[]{"Burkina Faso","From the heart of the West Africa"} );
         Supplier senegal = new Supplier("South Senegal", "From the heart of the South Africa");
         supplierDataStore.add(senegal);
         Supplier mozambic = new Supplier("Mozambic", "From the heart of Mozambic");

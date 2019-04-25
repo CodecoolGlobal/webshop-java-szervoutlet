@@ -2,7 +2,7 @@ package com.codecool.shop.model;
 
 import java.util.Currency;
 
-public class    Product extends BaseModel {
+public class Product extends BaseModel {
 
     private float defaultPrice;
     private Currency defaultCurrency;
@@ -10,7 +10,7 @@ public class    Product extends BaseModel {
     private Supplier supplier;
 
 
-    public Product(String name, float defaultPrice, String currencyString, String description, int productCategory, int supplier) {
+    public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
         super(name, description);
         this.setPrice(defaultPrice, currencyString);
         this.setSupplier(supplier);
