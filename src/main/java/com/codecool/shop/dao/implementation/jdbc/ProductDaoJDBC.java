@@ -159,4 +159,18 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
 
         return getProducts(query);
     }
+
+    public List<Product> getProducts(ProductDaoJDBC productDaoJDBC, Supplier supplier, ProductCategory productCategory, String selectedSupplierValue, String selectedProductValue) {
+        if (!selectedSupplierValue.equals("None")) {
+            if (!selectedProductValue.equals("None")) {
+                return  productDaoJDBC.getBy(productCategory, supplier);
+            }
+            return productDaoJDBC.getBy(supplier);
+
+        } else if (!selectedProductValue.equals("None")) {
+            return productDaoJDBC.getBy(productCategory);
+        } else {
+            return productDaoJDBC.getAll();
+        }
+    }
 }

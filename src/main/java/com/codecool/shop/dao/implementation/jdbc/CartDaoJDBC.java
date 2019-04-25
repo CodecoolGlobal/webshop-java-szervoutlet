@@ -6,6 +6,7 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,14 +33,17 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
     }
 
 
-
     public void add(Product product, int quantity) {
         String query = String.format("UPDATE products SET quantity = '%s' WHERE id = '%d';", quantity, product.getId());
+        String orderingQuery = "SELECT * FROM products ORDER BY products.id";
+
         try {
-            executeQuery(query);
+            executeUpdate(query);
+            executeQuery(orderingQuery);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -56,7 +60,7 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
     public void remove(int id) {
         String query = String.format("DELETE FROM products WHERE id = '%d';", id);
         try {
-            executeQuery(query);
+            executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -108,7 +112,22 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
         return null;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return getAll().size() == 0;
+    }
+
+    public void setCartProductQuantity(HttpServletRequest req) {
+        if (req.getParameter("removeFromCart") != null) {
+            remove(Integer.parseInt(req.getParameter("removeFromCart")));
+        } else {
+            if (!req.getParameter("quantity").isEmpty()) {
+                Product product = ProductDaoJDBC.getInstance().find(Integer.parseInt(req.getParameter("itemId")));
+                if (Integer.parseInt(req.getParameter("quantity")) == 0) {
+                    remove(Integer.parseInt(req.getParameter("itemId")));
+                } else {
+                    add(product, Integer.parseInt(req.getParameter("quantity")));
+                }
+            }
+        }
     }
 }

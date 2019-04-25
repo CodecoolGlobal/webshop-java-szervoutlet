@@ -1,12 +1,8 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.dao.implementation.jdbc.ProductCategoryDaoJDBC;
 import com.codecool.shop.dao.implementation.jdbc.ProductDaoJDBC;
 import com.codecool.shop.dao.implementation.jdbc.SupplierDaoJDBC;
@@ -15,7 +11,8 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
-import javax.servlet.ServletException;
+
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,13 +38,13 @@ public class ProductController extends HttpServlet {
         ProductCategory productCategory = productCategoryDaoJDBC.getByName(selectedProductValue);
 
         try {
-            getProducts(productDaoJDBC, supplier , productCategory);
-        } catch (Exception ignored) {}
-
+            productDaoJDBC.getProducts(productDaoJDBC, supplier, productCategory, selectedSupplierValue, selectedProductValue);
+        } catch (Exception ignored) {
+        }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        setVariables(resp, productCategoryDaoJDBC, supplierDaoJDBC, engine, context);
+        setVariables(resp, engine, context);
     }
 
 
@@ -60,21 +57,19 @@ public class ProductController extends HttpServlet {
         Supplier supplier = supplierDaoJDBC.getByName(selectedSupplierValue);
         ProductCategory productCategory = productCategoryDaoJDBC.getByName(selectedProductValue);
 
-
-        getProducts(productDaoJDBC, supplier, productCategory);
+        products = productDaoJDBC.getProducts(productDaoJDBC, supplier, productCategory, selectedSupplierValue, selectedProductValue);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-
         if (productCategoryDaoJDBC.getAll().contains(productCategory)) {
             context.setVariable("currentCategory", productCategory);
         }
-        setVariables(resp, productCategoryDaoJDBC, supplierDaoJDBC, engine, context);
+        setVariables(resp, engine, context);
 
     }
 
-    private void setVariables(HttpServletResponse resp, ProductCategoryDao productCategoryDataStore, SupplierDao supplierDataStore, TemplateEngine engine, WebContext context) throws IOException {
+    private void setVariables(HttpServletResponse resp, TemplateEngine engine, WebContext context) throws IOException {
         context.setVariable("selectedProduct", selectedProductValue);
         context.setVariable("selectedSupplier", selectedSupplierValue);
         context.setVariable("recipient", "World");
@@ -82,18 +77,5 @@ public class ProductController extends HttpServlet {
         context.setVariable("supplier", supplierDaoJDBC.getAll());
         context.setVariable("products", products);
         engine.process("product/index.html", context, resp.getWriter());
-    }
-
-    private void getProducts(ProductDaoJDBC productDaoJDBC, Supplier supplier, ProductCategory productCategory) {
-        if (!selectedSupplierValue.equals("None")) {
-            products = productDaoJDBC.getBy(supplier);
-            if (!selectedProductValue.equals("None")) {
-                products = productDaoJDBC.getBy(productCategory, supplier);
-            }
-        } else if (!selectedProductValue.equals("None")) {
-            products = productDaoJDBC.getBy(productCategory);
-        } else {
-            products = productDaoJDBC.getAll();
-        }
     }
 }

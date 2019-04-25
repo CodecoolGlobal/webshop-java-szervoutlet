@@ -15,18 +15,18 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/shoppingcart"})
 public class ShoppingCart extends HttpServlet {
-    static CartDaoJDBC cart = CartDaoJDBC.getInstance();
+    private static CartDaoJDBC cart = CartDaoJDBC.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+
+        float sumOfProductPrices = 0.0f;
+        for(Product product: cart.getAll()) sumOfProductPrices += product.getDefaultPrice() * product.getQuantity();
+
         context.setVariable("recipient", "World");
         context.setVariable("cart", cart.getAll());
-        float sumOfProductPrices = 0.0f;
-        for(Product product: cart.getAll()){
-            sumOfProductPrices += product.getDefaultPrice()*product.getQuantity();
-        }
         context.setVariable("sumOfProductValues", sumOfProductPrices);
         engine.process("product/shoppingcart.html", context, resp.getWriter());
 
@@ -38,7 +38,7 @@ public class ShoppingCart extends HttpServlet {
         if (isRemoveAllButtonClicked(req)) {
             removeChoosenProductFromCart(req);
         }
-        else addToCart.getCartProductQuantity(req);
+        else cart.setCartProductQuantity(req);
         resp.sendRedirect("/shoppingcart");
     }
 
