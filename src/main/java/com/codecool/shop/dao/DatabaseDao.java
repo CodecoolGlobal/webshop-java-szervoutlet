@@ -14,10 +14,18 @@ public class DatabaseDao {
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
     private static final String DB_USER = System.getenv("POSTGRES_DB_USER");
     private static final String DB_PASSWORD = System.getenv("POSTGRES_DB_PASSWORD");
-
+    private static DatabaseDao instance = null;
 
     public DatabaseDao() {
-        executeUpdateFromFile("/home/bertalan/Desktop/codecool/Java_OOP/4.TW/webshop-java-szervoutlet/src/main/sql/init_db.sql");
+        //executeUpdateFromFile("../src/main/sql/init_db.sql");
+    }
+
+
+    public static DatabaseDao getInstance() {
+        if (instance == null) {
+            instance = new DatabaseDao();
+        }
+        return instance;
     }
 
 
@@ -36,10 +44,8 @@ public class DatabaseDao {
 
     public void executeUpdate(String query) throws SQLException {
         try (Connection connection = getConnection()) {
-
             PreparedStatement statement = connection.prepareStatement(query);
             statement.executeUpdate();
-
         } catch (SQLTimeoutException e) {
             System.err.println("ERROR: SQL Timeout");
         }

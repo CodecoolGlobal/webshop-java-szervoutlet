@@ -1,8 +1,8 @@
+DROP TABLE IF EXISTS cart;
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS products;
-DROP TABLE IF EXISTS supplier;
 DROP TABLE IF EXISTS product_category;
--- DROP TABLE IF EXISTS users;
--- DROP TABLE IF EXISTS cart;
+DROP TABLE IF EXISTS supplier;
 
 CREATE TABLE products
 (
@@ -44,7 +44,8 @@ CREATE TABLE cart
 (
     id         SERIAL PRIMARY KEY NOT NULL,
     product_id INTEGER,
-    user_id    INTEGER            NOT NULL
+    user_id    INTEGER            NOT NULL,
+    quantity   INTEGER
 );
 
 
