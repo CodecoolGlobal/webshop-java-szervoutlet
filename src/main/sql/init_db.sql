@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS product_category;
 DROP TABLE IF EXISTS supplier;
+DROP SCHEMA IF EXISTS public;
 
 create schema public;
 
