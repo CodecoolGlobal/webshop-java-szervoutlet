@@ -1,7 +1,7 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.implementation.jdbc.ProductDaoJDBC;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -40,15 +40,21 @@ public class ShoppingCart extends HttpServlet {
         if (isRemoveAllButtonClicked(req)) {
             removeChoosenProductFromCart(req);
         }
-        else if (!req.getParameter("quantity").isEmpty()) {
-            Product product = ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("itemId")));
+        else {
+            getQuantity(req);
+        }
+        resp.sendRedirect("/shoppingcart");
+    }
+
+    static void getQuantity(HttpServletRequest req) {
+        if (!req.getParameter("quantity").isEmpty()) {
+            Product product = ProductDaoJDBC.getInstance().find(Integer.parseInt(req.getParameter("itemId")));
             if (Integer.parseInt(req.getParameter("quantity")) == 0) {
                 cart.remove(product);
             } else {
                 cart.put(product, Integer.parseInt(req.getParameter("quantity")));
             }
         }
-        resp.sendRedirect("/shoppingcart");
     }
 
     private boolean isRemoveAllButtonClicked(HttpServletRequest req) {
@@ -56,6 +62,6 @@ public class ShoppingCart extends HttpServlet {
     }
 
     private void removeChoosenProductFromCart(HttpServletRequest req) {
-        cart.remove(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("removeFromCart"))));
+        cart.remove(ProductDaoJDBC.getInstance().find(Integer.parseInt(req.getParameter("removeFromCart"))));
     }
 }
