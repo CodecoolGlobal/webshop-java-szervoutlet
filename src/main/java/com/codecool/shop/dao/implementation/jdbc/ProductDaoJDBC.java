@@ -54,7 +54,9 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
              ResultSet resultSet = statement.executeQuery(query)
         ) {
             if (resultSet.next()) {
-                return new Product(resultSet.getString("name"),
+                return new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         resultSet.getFloat("default price"),
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
@@ -92,7 +94,9 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
              ResultSet resultSet = statement.executeQuery(query)
         ) {
             while (resultSet.next()) {
-                Product actualProduct = new Product(resultSet.getString("name"),
+                Product actualProduct = new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         resultSet.getFloat("default_price"),
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
@@ -120,7 +124,9 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                Product product = new Product(resultSet.getString("name"),
+                Product product = new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         resultSet.getFloat("default_price"),
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
@@ -148,7 +154,9 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                Product product = new Product(resultSet.getString("name"),
+                Product product = new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         resultSet.getFloat("default_price"),
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
@@ -176,7 +184,9 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                Product product = new Product(resultSet.getString("name"),
+                Product product = new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         resultSet.getFloat("default_price"),
                         resultSet.getString("currency"),
                         resultSet.getString("description"),

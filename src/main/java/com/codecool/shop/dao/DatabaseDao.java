@@ -17,7 +17,7 @@ public class DatabaseDao {
     private static DatabaseDao instance = null;
 
     public DatabaseDao() {
-        executeUpdateFromFile("/home/bertalan/Desktop/codecool/Java_OOP/4.TW/webshop-java-szervoutlet/src/main/sql/init_db.sql");
+        //executeUpdateFromFile("../src/main/sql/init_db.sql");
     }
 
 
