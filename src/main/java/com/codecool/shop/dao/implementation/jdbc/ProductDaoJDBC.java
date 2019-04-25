@@ -5,6 +5,7 @@ import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
@@ -19,8 +20,19 @@ import java.util.List;
 
 public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
 
-    ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-    SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+    private ProductCategoryDaoJDBC productCategoryDaoJDBC = ProductCategoryDaoJDBC.getInstance();
+    private SupplierDaoJDBC supplierDaoJDBC = SupplierDaoJDBC.getInstance();
+    private static ProductDaoJDBC instance = null;
+
+    private ProductDaoJDBC() {
+    }
+
+    public static ProductDaoJDBC getInstance() {
+        if (instance == null) {
+            instance = new ProductDaoJDBC();
+        }
+        return instance;
+    }
 
     @Override
     public void add(Product product) {
@@ -46,8 +58,8 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
                         resultSet.getFloat("default price"),
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
-                        productCategoryDataStore.find(resultSet.getInt("product category")),
-                        supplierDataStore.find(resultSet.getInt("supplier")));
+                        productCategoryDaoJDBC.find(resultSet.getString("product category")),
+                        supplierDaoJDBC.find(resultSet.getString("supplier")));
             } else {
                 return null;
             }
@@ -84,8 +96,8 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
                         resultSet.getFloat("default price"),
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
-                        productCategoryDataStore.find(resultSet.getInt("product category")),
-                        supplierDataStore.find(resultSet.getInt("supplier")));
+                        productCategoryDaoJDBC.find(resultSet.getString("prod_cat")),
+                        supplierDaoJDBC.find(resultSet.getString("supp")));
                 resultList.add(actualProduct);
             }
 

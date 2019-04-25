@@ -10,6 +10,18 @@ import java.util.List;
 
 public class SupplierDaoJDBC extends DatabaseDao implements SupplierDao {
 
+    private static SupplierDaoJDBC instance = null;
+
+    private SupplierDaoJDBC() {
+    }
+
+    public static SupplierDaoJDBC getInstance() {
+        if (instance == null) {
+            instance = new SupplierDaoJDBC();
+        }
+        return instance;
+    }
+
     @Override
     public void add(Supplier supplier) {
         String query = String.format("INSERT INTO supplier(name, description)VALUES ('%s', '%s');", supplier.getName(), supplier.getDescription());
@@ -21,8 +33,8 @@ public class SupplierDaoJDBC extends DatabaseDao implements SupplierDao {
     }
 
     @Override
-    public Supplier find(int id) {
-        String query = String.format("SELECT * FROM supplier WHERE id ='%d';", id);
+    public Supplier find(String supp) {
+        String query = String.format("SELECT * FROM supplier WHERE supp ='%s';", supp);
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
@@ -43,8 +55,8 @@ public class SupplierDaoJDBC extends DatabaseDao implements SupplierDao {
     }
 
     @Override
-    public void remove(int id) {
-        String query = String.format("DELETE FROM supplier WHERE id = '%d';", id);
+    public void remove(String supp) {
+        String query = String.format("DELETE FROM supplier WHERE supp = '%s';", supp);
         try {
             executeQuery(query);
         } catch (SQLException e) {

@@ -12,6 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductCategoryDaoJDBC extends DatabaseDao implements ProductCategoryDao {
+
+    private static ProductCategoryDaoJDBC instance = null;
+
+    private ProductCategoryDaoJDBC() {
+    }
+
+    public static ProductCategoryDaoJDBC getInstance() {
+        if (instance == null) {
+            instance = new ProductCategoryDaoJDBC();
+        }
+        return instance;
+    }
+
     @Override
     public void add(ProductCategory category) {
         String query = String.format("INSERT INTO product_category(name, department, description)VALUES ('%s', '%s', '%s');", category.getName(), category.getDepartment(), category.getDescription());
@@ -23,8 +36,8 @@ public class ProductCategoryDaoJDBC extends DatabaseDao implements ProductCatego
     }
 
     @Override
-    public ProductCategory find(int id) {
-        String query = String.format("SELECT * FROM product_category WHERE id ='%d';", id);
+    public ProductCategory find(String type) {
+        String query = String.format("SELECT * FROM product_category WHERE type ='%s';", type);
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
@@ -45,8 +58,8 @@ public class ProductCategoryDaoJDBC extends DatabaseDao implements ProductCatego
     }
 
     @Override
-    public void remove(int id) {
-        String query = String.format("DELETE FROM product_category WHERE id = '%d';", id);
+    public void remove(String type) {
+        String query = String.format("DELETE FROM product_category WHERE type = '%s';", type);
         try {
             executeQuery(query);
         } catch (SQLException e) {

@@ -31,13 +31,13 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
     }
 
     @Override
-    public ProductCategory find(int id) {
-        return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
+    public ProductCategory find(String type) {
+        return data.stream().filter(t -> t.getName().equals(type)).findFirst().orElse(null);
     }
 
     @Override
-    public void remove(int id) {
-        data.remove(find(id));
+    public void remove(String type) {
+        data.remove(find(type));
     }
 
     @Override

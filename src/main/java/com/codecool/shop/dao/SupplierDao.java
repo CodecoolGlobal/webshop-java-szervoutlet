@@ -7,8 +7,8 @@ import java.util.List;
 public interface SupplierDao {
 
     void add(Supplier supplier);
-    Supplier find(int id);
-    void remove(int id);
+    Supplier find(String supp);
+    void remove(String supp);
 
     List<Supplier> getAll();
 
