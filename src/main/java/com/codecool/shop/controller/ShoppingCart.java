@@ -1,7 +1,7 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.implementation.jdbc.CartDaoJDBC;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -10,24 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+
 
 
 @WebServlet(urlPatterns = {"/shoppingcart"})
 public class ShoppingCart extends HttpServlet {
-    static HashMap<Product, Integer> cart = new HashMap<>();
-
+    static CartDaoJDBC cart = CartDaoJDBC.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("recipient", "World");
-        context.setVariable("cart", cart);
+        context.setVariable("cart", cart.getAll());
         float sumOfProductPrices = 0.0f;
-        for(Map.Entry<Product, Integer> entry: cart.entrySet()){
-            sumOfProductPrices += entry.getKey().getDefaultPrice()*entry.getValue();
+        for(Product product: cart.getAll()){ /*TODO*/
+            sumOfProductPrices += 20;
         }
         context.setVariable("sumOfProductValues", sumOfProductPrices);
         engine.process("product/shoppingcart.html", context, resp.getWriter());
@@ -49,6 +47,6 @@ public class ShoppingCart extends HttpServlet {
     }
 
     private void removeChoosenProductFromCart(HttpServletRequest req) {
-        cart.remove(ProductDaoMem.getInstance().find(Integer.parseInt(req.getParameter("removeFromCart"))));
+        cart.remove(Integer.parseInt(req.getParameter("removeFromCart")));
     }
 }
