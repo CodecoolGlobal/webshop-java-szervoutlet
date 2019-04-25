@@ -7,7 +7,9 @@ import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.jdbc.ProductCategoryDaoJDBC;
 import com.codecool.shop.dao.implementation.jdbc.ProductDaoJDBC;
+import com.codecool.shop.dao.implementation.jdbc.SupplierDaoJDBC;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -29,6 +31,8 @@ public class ProductController extends HttpServlet {
     private List<Product> products;
 
     ProductDaoJDBC productDaoJDBC = ProductDaoJDBC.getInstance();
+    ProductCategoryDaoJDBC productCategoryDaoJDBC = ProductCategoryDaoJDBC.getInstance();
+    SupplierDaoJDBC supplierDaoJDBC = SupplierDaoJDBC.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -82,8 +86,8 @@ public class ProductController extends HttpServlet {
         context.setVariable("selectedProduct", selectedProductValue);
         context.setVariable("selectedSupplier", selectedSupplierValue);
         context.setVariable("recipient", "World");
-        context.setVariable("category", productCategoryDataStore.getAll());
-        context.setVariable("supplier", supplierDataStore.getAll());
+        context.setVariable("category", productCategoryDaoJDBC.getAll());
+        context.setVariable("supplier", supplierDaoJDBC.getAll());
         context.setVariable("products", products);
         engine.process("product/index.html", context, resp.getWriter());
     }
