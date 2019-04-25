@@ -24,7 +24,7 @@ public class ShoppingCart extends HttpServlet {
         context.setVariable("recipient", "World");
         context.setVariable("cart", cart.getAll());
         float sumOfProductPrices = 0.0f;
-        for(Product product: cart.getAll()){ /*TODO*/
+        for(Product product: cart.getAll()){
             sumOfProductPrices += product.getDefaultPrice()*product.getQuantity();
         }
         context.setVariable("sumOfProductValues", sumOfProductPrices);
