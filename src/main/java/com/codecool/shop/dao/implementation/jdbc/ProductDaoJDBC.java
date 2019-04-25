@@ -21,6 +21,7 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
 
     ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
     SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+    DatabaseDao databaseDao = DatabaseDao.getInstance();
 
     @Override
     public void add(Product product) {
@@ -99,7 +100,26 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
 
     @Override
     public List<Product> getBy(Supplier supplier) {
-        return null;
+        String query = "SELECT * FROM products WHERE supplier ='" + supplier.getId() + "';";
+
+        List<Product> resultList = new ArrayList<>();
+
+        try (Connection connection = getConnection();
+             Statement statement =connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+        ){
+            while (resultSet.next()){
+                Product product = new Product(resultSet.getString("name"), Float.valueOf(resultSet.getString("default_price")), resultSet.getString("currency"),
+                        resultSet.getString("description"), ProductCategoryDaoMem.getInstance().find(resultSet.getInt("product_category")), SupplierDaoMem.getInstance().find(resultSet.getInt("supplier")));
+                resultList.add(product);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultList;
     }
 
     @Override

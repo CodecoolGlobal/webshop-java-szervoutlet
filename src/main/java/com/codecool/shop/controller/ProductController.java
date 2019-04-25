@@ -7,6 +7,7 @@ import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.jdbc.ProductDaoJDBC;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -26,6 +27,8 @@ public class ProductController extends HttpServlet {
     private String selectedProductValue = "None";
     private String selectedSupplierValue = "None";
     private List<Product> products;
+
+    ProductDaoJDBC productDaoJDBC = new ProductDaoJDBC();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -87,7 +90,7 @@ public class ProductController extends HttpServlet {
 
     private void getProducts(ProductDao productDataStore, Supplier supplier, ProductCategory productCategory) {
         if (!selectedSupplierValue.equals("None")) {
-            products = productDataStore.getBy(supplier);
+            products = productDaoJDBC.getBy(supplier);
             if (!selectedProductValue.equals("None")) {
                 products = productDataStore.getBy(productCategory, supplier);
             }
