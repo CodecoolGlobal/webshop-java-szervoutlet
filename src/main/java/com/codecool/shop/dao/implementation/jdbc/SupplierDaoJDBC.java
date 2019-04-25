@@ -41,8 +41,8 @@ public class SupplierDaoJDBC extends DatabaseDao implements SupplierDao {
              ResultSet resultSet = statement.executeQuery(query)
         ){
             if (resultSet.next()){
-                return new Supplier(resultSet.getString("id"),
-                        resultSet.getString("name"));
+                return new Supplier(resultSet.getInt("id"),
+                        resultSet.getString("name"), resultSet.getString("description"));
             } else {
                 return null;
             }
@@ -75,8 +75,8 @@ public class SupplierDaoJDBC extends DatabaseDao implements SupplierDao {
              ResultSet resultSet = statement.executeQuery(query)
         ){
             while (resultSet.next()){
-                Supplier actualSupplier = new Supplier(resultSet.getString("name"),
-                        resultSet.getString("id"));
+                Supplier actualSupplier = new Supplier(resultSet.getInt("id"), resultSet.getString("name"),
+                        resultSet.getString("description"));
                 resultList.add(actualSupplier);
             }
 
@@ -90,6 +90,24 @@ public class SupplierDaoJDBC extends DatabaseDao implements SupplierDao {
 
     @Override
     public Supplier getByName(String supplierName) {
-        return null;
+        String query = String.format("SELECT * FROM supplier WHERE name LIKE '%s';", supplierName);
+
+        Supplier result = null;
+
+        try (Connection connection = getConnection();
+             Statement statement =connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)
+        ){
+            while (resultSet.next()){
+                result = new Supplier(resultSet.getInt("id"), resultSet.getString("name"),
+                        resultSet.getString("description"));
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }

@@ -30,55 +30,47 @@ public class ProductController extends HttpServlet {
     private String selectedSupplierValue = "None";
     private List<Product> products;
 
-    ProductDaoJDBC productDaoJDBC = ProductDaoJDBC.getInstance();
-    ProductCategoryDaoJDBC productCategoryDaoJDBC = ProductCategoryDaoJDBC.getInstance();
-    SupplierDaoJDBC supplierDaoJDBC = SupplierDaoJDBC.getInstance();
+    private ProductDaoJDBC productDaoJDBC = ProductDaoJDBC.getInstance();
+    private ProductCategoryDaoJDBC productCategoryDaoJDBC = ProductCategoryDaoJDBC.getInstance();
+    private SupplierDaoJDBC supplierDaoJDBC = SupplierDaoJDBC.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
-        Supplier supplier = supplierDataStore.getByName(selectedSupplierValue);
-        ProductCategory productCategory = productCategoryDataStore.getByName(selectedProductValue);
+        Supplier supplier = supplierDaoJDBC.getByName(selectedSupplierValue);
+        ProductCategory productCategory = productCategoryDaoJDBC.getByName(selectedProductValue);
 
         try {
-            getProducts(productDataStore, supplier, productCategory);
+            getProducts(productDaoJDBC, supplier , productCategory);
         } catch (Exception ignored) {}
 
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        setVariables(resp, productCategoryDataStore, supplierDataStore, engine, context);
+        setVariables(resp, productCategoryDaoJDBC, supplierDaoJDBC, engine, context);
     }
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-
         selectedProductValue = req.getParameter("orderByProductCategory");
         selectedSupplierValue = req.getParameter("orderBySupplier");
 
-        Supplier supplier = supplierDataStore.getByName(selectedSupplierValue);
-        ProductCategory productCategory = productCategoryDataStore.getByName(selectedProductValue);
+        Supplier supplier = supplierDaoJDBC.getByName(selectedSupplierValue);
+        ProductCategory productCategory = productCategoryDaoJDBC.getByName(selectedProductValue);
 
 
-        getProducts(productDataStore, supplier, productCategory);
+        getProducts(productDaoJDBC, supplier, productCategory);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
 
-        if (productCategoryDataStore.getAll().contains(productCategory)) {
+        if (productCategoryDaoJDBC.getAll().contains(productCategory)) {
             context.setVariable("currentCategory", productCategory);
         }
-        setVariables(resp, productCategoryDataStore, supplierDataStore, engine, context);
+        setVariables(resp, productCategoryDaoJDBC, supplierDaoJDBC, engine, context);
 
     }
 
@@ -92,7 +84,7 @@ public class ProductController extends HttpServlet {
         engine.process("product/index.html", context, resp.getWriter());
     }
 
-    private void getProducts(ProductDao productDataStore, Supplier supplier, ProductCategory productCategory) {
+    private void getProducts(ProductDaoJDBC productDaoJDBC, Supplier supplier, ProductCategory productCategory) {
         if (!selectedSupplierValue.equals("None")) {
             products = productDaoJDBC.getBy(supplier);
             if (!selectedProductValue.equals("None")) {

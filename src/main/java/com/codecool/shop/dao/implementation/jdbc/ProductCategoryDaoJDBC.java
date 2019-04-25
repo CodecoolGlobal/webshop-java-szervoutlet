@@ -44,7 +44,7 @@ public class ProductCategoryDaoJDBC extends DatabaseDao implements ProductCatego
              ResultSet resultSet = statement.executeQuery(query)
         ) {
             if (resultSet.next()) {
-                return new ProductCategory(resultSet.getString("name"), resultSet.getString("department"),
+                return new ProductCategory(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("department"),
                         resultSet.getString("description"));
             } else {
                 return null;
@@ -78,7 +78,7 @@ public class ProductCategoryDaoJDBC extends DatabaseDao implements ProductCatego
              ResultSet resultSet = statement.executeQuery(query)
         ) {
             while (resultSet.next()) {
-                ProductCategory actualProductCategory = new ProductCategory(resultSet.getString("name"), resultSet.getString("department"),
+                ProductCategory actualProductCategory = new ProductCategory(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("department"),
                         resultSet.getString("description"));
                 resultList.add(actualProductCategory);
             }
@@ -93,6 +93,25 @@ public class ProductCategoryDaoJDBC extends DatabaseDao implements ProductCatego
 
     @Override
     public ProductCategory getByName(String productCategoryName) {
-        return null;
+        String query = String.format("SELECT * FROM product_category WHERE name LIKE '%s';", productCategoryName);
+
+        ProductCategory result = null;
+
+        try (Connection connection = getConnection();
+             Statement statement =connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)
+        ){
+            while (resultSet.next()){
+                result = new ProductCategory(resultSet.getInt("id"), resultSet.getString("name"),
+                        resultSet.getString("department"), resultSet.getString("description"));
+
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }
