@@ -67,16 +67,15 @@ public class DatabaseDao {
         }
     }
 
-    public ResultSet executeQuery(String query) throws SQLException {
+    public void executeQuery(String query) throws SQLException {
         try (Connection connection = getConnection()) {
 
             PreparedStatement statement = connection.prepareStatement(query);
-            return statement.executeQuery();
+            statement.executeQuery();
 
         } catch (SQLTimeoutException e) {
             System.err.println("ERROR: SQL Timeout");
         }
-        return null;
     }
 
     public void copyDataFromFile(String tableName, String filePath) throws SQLException {

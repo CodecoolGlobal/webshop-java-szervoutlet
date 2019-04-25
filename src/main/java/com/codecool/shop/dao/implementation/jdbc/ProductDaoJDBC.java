@@ -32,8 +32,8 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
 
     @Override
     public void add(Product product) {
-        String query = String.format("INSERT INTO products(name, default_price, currency, description, supplier, product_category)VALUES ('%s', '%s', '%s', '%s', '%s', '%s');",
-                product.getName(), product.getDefaultPrice(), product.getDefaultCurrency(), product.getDescription(), product.getSupplier(), product.getProductCategory());
+        String query = String.format("INSERT INTO products(name, default_price, currency, description, supplier, product_category, quantity)VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');",
+                product.getName(), product.getDefaultPrice(), product.getDefaultCurrency(), product.getDescription(), product.getSupplier(), product.getProductCategory(), product.getQuantity());
         try {
             executeQuery(query);
         } catch (SQLException e) {
@@ -53,11 +53,12 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
                 return new Product(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
-                        resultSet.getFloat("default price"),
+                        resultSet.getFloat("default_price"),
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
                         productCategoryDaoJDBC.find(resultSet.getInt("product_category")),
-                        supplierDaoJDBC.find(resultSet.getInt("supplier")));
+                        supplierDaoJDBC.find(resultSet.getInt("supplier")),
+                        resultSet.getInt("quantity"));
             } else {
                 return null;
             }
@@ -97,7 +98,8 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
                         productCategoryDaoJDBC.find(resultSet.getInt("product_category")),
-                        supplierDaoJDBC.find(resultSet.getInt("supplier")));
+                        supplierDaoJDBC.find(resultSet.getInt("supplier")),
+                        resultSet.getInt("quantity"));
                 resultList.add(actualProduct);
             }
 
@@ -138,7 +140,8 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
                         productCategoryDaoJDBC.find(resultSet.getInt("product_category")),
-                        supplierDaoJDBC.find(resultSet.getInt("supplier")));
+                        supplierDaoJDBC.find(resultSet.getInt("supplier")),
+                        resultSet.getInt("quantity"));
                 resultList.add(product);
             }
 
