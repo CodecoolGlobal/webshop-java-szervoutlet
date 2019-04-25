@@ -88,6 +88,12 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
         return getAll().size() == 0;
     }
 
+    public float getSumOfProductPrices(){
+        float sumOfProductPrices = 0.0f;
+        for(Product product: getAll()) sumOfProductPrices += product.getDefaultPrice() * product.getQuantity();
+        return sumOfProductPrices;
+    }
+
     public void setCartProductQuantity(HttpServletRequest req) {
         if (req.getParameter("removeFromCart") != null) {
             remove(Integer.parseInt(req.getParameter("removeFromCart")));

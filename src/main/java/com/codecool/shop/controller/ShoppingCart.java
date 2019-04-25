@@ -22,14 +22,10 @@ public class ShoppingCart extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        float sumOfProductPrices = 0.0f;
-        for(Product product: cart.getAll()) sumOfProductPrices += product.getDefaultPrice() * product.getQuantity();
-
         context.setVariable("recipient", "World");
         context.setVariable("cart", cart.getAll());
-        context.setVariable("sumOfProductValues", sumOfProductPrices);
+        context.setVariable("sumOfProductValues", cart.getSumOfProductPrices());
         engine.process("product/shoppingcart.html", context, resp.getWriter());
-
     }
 
 
