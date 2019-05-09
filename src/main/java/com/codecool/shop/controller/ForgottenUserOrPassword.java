@@ -19,7 +19,7 @@ public class ForgottenUserOrPassword extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        engine.process("product/forgotten.html", context, resp.getWriter());
+        engine.process("product/logAndReg/forgotten.html", context, resp.getWriter());
     }
 
 }

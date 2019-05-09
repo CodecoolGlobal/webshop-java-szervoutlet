@@ -73,7 +73,6 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
                 quantity = resultSet.getInt("quantity");
             }
 
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -173,6 +172,17 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
                     add(product, Integer.parseInt(req.getParameter("quantity")), 1, false);
                 }
             }
+        }
+    }
+
+
+    public void clearShoppingCart(final int userId) {
+        String query = String.format("DELETE FROM shoppingcart WHERE userid = '%s';",userId);
+
+        try {
+            executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

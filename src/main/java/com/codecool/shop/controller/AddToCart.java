@@ -12,8 +12,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
-@WebServlet(urlPatterns = {"/addToCart"})
-public class addToCart extends HttpServlet {
+@WebServlet(urlPatterns = {"/AddToCart"})
+public class AddToCart extends HttpServlet {
 
     static CartDaoJDBC cart = CartDaoJDBC.getInstance();
     @Override

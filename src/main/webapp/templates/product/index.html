@@ -60,7 +60,7 @@
                     </div>
                     <div class="row form-inline">
                         <div class="card-text">
-                            <form action="/addToCart" method="POST">
+                            <form action="/AddToCart" method="POST">
                                 <input type="hidden" name="itemId" th:value="${prod.getId()}">
                                 <input type="number" name="quantity" class="form-control input-lg" id="quantity" min="0"
                                        max="999" th:value="1">

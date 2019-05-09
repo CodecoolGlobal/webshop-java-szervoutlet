@@ -48,7 +48,7 @@ public class ShoppingCart extends HttpServlet {
         if (isRemoveAllButtonClicked(req)) {
             removeChoosenProductFromCart(req);
         }
-        else addToCart.getCartProductQuantity(req, userId, false);
+        else AddToCart.getCartProductQuantity(req, userId, false);
         resp.sendRedirect("/shoppingcart");
     }
 

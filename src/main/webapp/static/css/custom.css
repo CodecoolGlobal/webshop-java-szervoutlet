@@ -3,13 +3,39 @@
 }
 
 .session{
-    display: inline-block;
+    padding-top: 15px;
+    padding-right: 10px;
+    display: -webkit-box;
 }
 
 .session a{
-    padding: auto;
+    font-size: 12px;
+    background: #a7a7a7;
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 5px 10px 5px 10px;
+    margin: 0 15px 0 5px;
     text-decoration: none;
+    color: black;
 }
+
+.session a:hover, .purchase a:hover{
+    color: #4f4f4f;
+    background: #c0c0c0;
+}
+
+.purchase a{
+    font-size: 12px;
+    background: #a7a7a7;
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 5px 10px 5px 10px;
+    margin: 0 5px 0 5px;
+    text-decoration: none;
+    color: black;
+}
+
+
 
 .thumbnail {
     margin-bottom: 20px;
