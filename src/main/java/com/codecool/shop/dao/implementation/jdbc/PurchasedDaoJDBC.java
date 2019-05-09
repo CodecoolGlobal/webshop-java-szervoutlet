@@ -43,7 +43,6 @@ public class PurchasedDaoJDBC extends DatabaseDao implements ProductDao {
             try {
                 executeQuery(query);
             } catch (SQLException e) {
-                e.printStackTrace();
             }
         }
     }

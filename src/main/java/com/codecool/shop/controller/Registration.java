@@ -30,7 +30,7 @@ public class Registration extends HttpServlet {
         String email = req.getParameter("email");
         String password1 = req.getParameter("pass1");
         String password2 = req.getParameter("pass2");
-        int phoneNumber = Integer.parseInt(req.getParameter("phoneNumber"));
+        String phoneNumber =  req.getParameter("phoneNumber");
         String shippingAddress = req.getParameter("Baddress") + "," + req.getParameter("Bzip") + "," + req.getParameter("Bcity") + "," + req.getParameter("Bcountry");
         String billingAddress = req.getParameter("Saddress") + "," + req.getParameter("Szip") + "," + req.getParameter("Scity") + "," + req.getParameter("Scountry");
         userDaoJDBC.add(name, email, password1, phoneNumber, shippingAddress, billingAddress);

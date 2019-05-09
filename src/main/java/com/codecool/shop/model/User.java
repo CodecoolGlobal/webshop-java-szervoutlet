@@ -5,11 +5,11 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private int phoneNumber;
+    private String phoneNumber;
     private String billingAddress;
     private String shippingAddress;
 
-    public User(final int id, final String name, final String email, final String password, final int phoneNumber, final String billingAddress, final String shippingAddress) {
+    public User(final int id, final String name, final String email, final String password, final String phoneNumber, final String billingAddress, final String shippingAddress) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -35,11 +35,11 @@ public class User {
         return email;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 

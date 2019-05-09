@@ -17,9 +17,9 @@ public class ForgottenUserOrPassword extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setHeader("Content-type", "text/html; charset=utf-8");
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         engine.process("product/logAndReg/forgotten.html", context, resp.getWriter());
     }
-
 }

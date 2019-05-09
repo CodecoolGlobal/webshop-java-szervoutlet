@@ -29,7 +29,7 @@ public class UserDaoJDBC extends DatabaseDao implements UserDao {
     }
 
     @Override
-    public void add(String name, String email, String password, int phoneNumber, String shippingAddress, String billingAddress) {
+    public void add(String name, String email, String password, String phoneNumber, String shippingAddress, String billingAddress) {
         String query = String.format("INSERT INTO users(email, password, phone_number, billing_address, shipping_address, name) VALUES('%s', '%s', '%s', '%s', '%s', '%s');",email,password,phoneNumber,shippingAddress, billingAddress, name);
         try {
             executeUpdate(query);
@@ -71,7 +71,7 @@ public class UserDaoJDBC extends DatabaseDao implements UserDao {
                         resultSet.getString("name"),
                         resultSet.getString("email"),
                         resultSet.getString("password"),
-                        resultSet.getInt("phone_number"),
+                        resultSet.getString("phone_number"),
                         resultSet.getString("billing_address"),
                         resultSet.getString("shipping_address"));
                 resultList.add(actualUser);
