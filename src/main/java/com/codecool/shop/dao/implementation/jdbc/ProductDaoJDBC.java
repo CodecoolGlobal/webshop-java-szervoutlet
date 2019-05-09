@@ -57,8 +57,7 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
                         productCategoryDaoJDBC.find(resultSet.getInt("product_category")),
-                        supplierDaoJDBC.find(resultSet.getInt("supplier")),
-                        resultSet.getInt("quantity"));
+                        supplierDaoJDBC.find(resultSet.getInt("supplier")));
             } else {
                 return null;
             }
@@ -98,8 +97,7 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
                         productCategoryDaoJDBC.find(resultSet.getInt("product_category")),
-                        supplierDaoJDBC.find(resultSet.getInt("supplier")),
-                        resultSet.getInt("quantity"));
+                        supplierDaoJDBC.find(resultSet.getInt("supplier")));
                 resultList.add(actualProduct);
             }
 
@@ -125,7 +123,7 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
         return getProducts(query);
     }
 
-    private List<Product> getProducts(String query) {
+    public List<Product> getProducts(String query) {
         List<Product> resultList = new ArrayList<>();
 
         try (Connection connection = getConnection();
@@ -140,8 +138,7 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
                         productCategoryDaoJDBC.find(resultSet.getInt("product_category")),
-                        supplierDaoJDBC.find(resultSet.getInt("supplier")),
-                        resultSet.getInt("quantity"));
+                        supplierDaoJDBC.find(resultSet.getInt("supplier")));
                 resultList.add(product);
             }
 

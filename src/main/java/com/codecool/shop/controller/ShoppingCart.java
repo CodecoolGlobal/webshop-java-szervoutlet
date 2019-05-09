@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -21,24 +22,33 @@ public class ShoppingCart extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("recipient", "World");
-        context.setVariable("cart", cart.getAll());
-        float sumOfProductPrices = 0.0f;
-        for(Product product: cart.getAll()){
-            sumOfProductPrices += product.getDefaultPrice()*product.getQuantity();
-        }
-        context.setVariable("sumOfProductValues", sumOfProductPrices);
-        engine.process("product/shoppingcart.html", context, resp.getWriter());
 
+        HttpSession session = req.getSession(false);
+        Integer userId = (Integer) session.getAttribute("id");
+
+        context.setVariable("recipient", "World");
+        context.setVariable("cart", cart.getAll(userId));
+        context.setVariable("cartDao", cart);
+        float sumOfProductPrices = 0.0f;
+        for(Product product: cart.getAll(userId)){
+            sumOfProductPrices += product.getDefaultPrice()*cart.getQuantity(product, userId);
+        }
+        context.setVariable("session", session);
+        context.setVariable("sumOfProductValues", sumOfProductPrices);
+        resp.setHeader("Content-type", "text/html; charset=utf-8");
+        engine.process("product/shoppingcart.html", context, resp.getWriter());
     }
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        HttpSession session = req.getSession(false);
+        int userId =(int)session.getAttribute("id");
+
         if (isRemoveAllButtonClicked(req)) {
             removeChoosenProductFromCart(req);
         }
-        else addToCart.getCartProductQuantity(req);
+        else addToCart.getCartProductQuantity(req, userId, false);
         resp.sendRedirect("/shoppingcart");
     }
 

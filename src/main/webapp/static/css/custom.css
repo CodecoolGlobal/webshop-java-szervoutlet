@@ -2,6 +2,15 @@
     margin-right: 5px;
 }
 
+.session{
+    display: inline-block;
+}
+
+.session a{
+    padding: auto;
+    text-decoration: none;
+}
+
 .thumbnail {
     margin-bottom: 20px;
     padding: 0px;

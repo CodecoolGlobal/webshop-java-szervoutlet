@@ -35,6 +35,10 @@
                         </div>
                     </li>
                 </ul>
+                <div th:if="${session}" class="session">
+                    <a class="ui-icon-link" href="/logout">Logout</a>
+                    <p> Welcome <strong th:text="${session.name}"></strong>!</p>
+                </div>
                 <span class="navbar-text mr-2 font-italic">Always good to have savings... </span>
                 <div><a class="btn btn-warning" href="/shoppingcart"><i class="fas fa-shopping-cart"></i></a></div>
             </div>

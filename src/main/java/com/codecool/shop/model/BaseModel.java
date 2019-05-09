@@ -25,12 +25,6 @@ public class BaseModel {
         this.description = description;
     }
 
-    BaseModel(int id, String name, String description, int quantity) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.quantity = quantity;
-    }
 
     public int getQuantity() {
         return quantity;

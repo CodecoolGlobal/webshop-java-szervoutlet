@@ -41,6 +41,11 @@
 </div>
 <div class="background-image"></div>
 <div class="container">
+    <div th:if="${session}" class="card session">
+        <a class="ui-icon-link" href="/logout">Logout</a>
+        <p> Welcome <strong th:text="${session.name}"></strong>!</p>
+    </div>
+
     <div th:if="${cart.isEmpty()}"><h2 class="text-center mt-5">Your cart is empty!</h2></div>
     <div id="products" class="row mt-2">
         <div class="col col-sm-12 col-md-6 col-lg-4 productCard" th:each="prod,iterStat: ${cart}">
@@ -63,7 +68,7 @@
                             <form action="/shoppingcart" method="POST">
                                 <input type="hidden" name="itemId" th:value="${prod.getId()}">
                                 <input type="number" name="quantity" class="form-control input-lg" id="quantity" min="0"
-                                       max="999" th:value="${prod.quantity}">
+                                       max="999" th:value="${cartDao.getQuantity(prod,session.id)}">
                                 <button type="submit" class="form-control btn btn-success"><i class="fas fa-check"></i>
                                     Apply
                                 </button>
