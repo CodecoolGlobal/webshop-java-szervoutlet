@@ -38,7 +38,6 @@ public class OrderDetails extends HttpServlet {
 
         cart.clearShoppingCart(userId);
 
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("recipient", "World");

@@ -2,7 +2,6 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.jdbc.CartDaoJDBC;
-import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import javax.servlet.annotation.WebServlet;
@@ -29,10 +28,7 @@ public class ShoppingCart extends HttpServlet {
         context.setVariable("recipient", "World");
         context.setVariable("cart", cart.getAll(userId));
         context.setVariable("cartDao", cart);
-        float sumOfProductPrices = 0.0f;
-        for(Product product: cart.getAll(userId)){
-            sumOfProductPrices += product.getDefaultPrice()*cart.getQuantity(product, userId);
-        }
+        float sumOfProductPrices = cart.getSumOfProductPrices(userId);
         context.setVariable("session", session);
         context.setVariable("sumOfProductValues", sumOfProductPrices);
         resp.setHeader("Content-type", "text/html; charset=utf-8");
@@ -48,7 +44,7 @@ public class ShoppingCart extends HttpServlet {
         if (isRemoveAllButtonClicked(req)) {
             removeChoosenProductFromCart(req);
         }
-        else AddToCart.getCartProductQuantity(req, userId, false);
+        else cart.getCartProductQuantity(req, userId, false);
         resp.sendRedirect("/shoppingcart");
     }
 

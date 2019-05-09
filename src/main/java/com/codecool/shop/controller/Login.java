@@ -21,9 +21,8 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session=req.getSession(false);
-        if(session != null){
-            resp.sendRedirect("/");
-        }
+        if(session != null) resp.sendRedirect("/");
+
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         engine.process("product/logAndReg/login.html", context, resp.getWriter());

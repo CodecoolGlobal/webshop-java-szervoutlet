@@ -32,7 +32,6 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
         return instance;
     }
 
-
     public void add(Product product, int quantity, int userId, boolean isAdd) {
         String query = String.format("SELECT * FROM products JOIN shoppingcart on products.id = shoppingcart.productid WHERE shoppingcart.userid = '%d';", userId);
         List<Product> products = getProducts(query);
@@ -150,14 +149,23 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
         return resultList;
     }
 
-    public boolean isEmpty(int userid) {
-        return getAll(userid).size() == 0;
+    public float getSumOfProductPrices(int userId){
+        float sumOfProductPrices = 0.0f;
+        for(Product product: getAll(userId)){
+            sumOfProductPrices += product.getDefaultPrice()*getQuantity(product, userId);
+        }
+        return sumOfProductPrices;
     }
 
-    public float getSumOfProductPrices(){
-        float sumOfProductPrices = 0.0f;
-        for(Product product: getAll()) sumOfProductPrices += product.getDefaultPrice() * product.getQuantity();
-        return sumOfProductPrices;
+    public void getCartProductQuantity(HttpServletRequest req, int userId, boolean isAdd) {
+        if (!req.getParameter("quantity").isEmpty()) {
+            Product product = ProductDaoJDBC.getInstance().find(Integer.parseInt(req.getParameter("itemId")));
+            if (Integer.parseInt(req.getParameter("quantity")) == 0) {
+                remove(Integer.parseInt(req.getParameter("itemId")));
+            } else {
+                add(product, Integer.parseInt(req.getParameter("quantity")), userId, isAdd);
+            }
+        }
     }
 
     public void setCartProductQuantity(HttpServletRequest req) {

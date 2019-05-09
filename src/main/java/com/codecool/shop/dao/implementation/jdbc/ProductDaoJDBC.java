@@ -79,6 +79,8 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
         }
     }
 
+
+
     @Override
     public List<Product> getAll() {
         String query = "SELECT * FROM products;";
