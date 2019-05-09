@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/shoppingcart"})
 public class ShoppingCart extends HttpServlet {
-    static CartDaoJDBC cart = CartDaoJDBC.getInstance();
+    private static CartDaoJDBC cart = CartDaoJDBC.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -33,6 +33,7 @@ public class ShoppingCart extends HttpServlet {
         context.setVariable("sumOfProductValues", sumOfProductPrices);
         resp.setHeader("Content-type", "text/html; charset=utf-8");
         engine.process("product/shoppingcart.html", context, resp.getWriter());
+
     }
 
 
