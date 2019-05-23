@@ -2,24 +2,26 @@ package com.codecool.shop.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Supplier extends BaseModel {
     private List<Product> products;
 
-    public Supplier(String name, String description) {
-        super(name);
+    public Supplier(int id, String name, String description) {
+        super(id, name, description);
         this.products = new ArrayList<>();
-    }
-
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
+        this.equals(this);
     }
 
     public List<Product> getProducts() {
         return this.products;
     }
 
-    public void addProduct(Product product) {
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
+    }
+
+    void addProduct(Product product) {
         this.products.add(product);
     }
 
@@ -31,5 +33,18 @@ public class Supplier extends BaseModel {
                 this.name,
                 this.description
         );
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Supplier supplier = (Supplier) o;
+        return Objects.equals(id, supplier.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(products);
     }
 }

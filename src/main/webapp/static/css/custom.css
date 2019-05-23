@@ -1,62 +1,169 @@
 .glyphicon {
-    margin-right:5px;
+    margin-right: 5px;
 }
-.thumbnail
-{
+
+.session{
+    padding-top: 15px;
+    padding-right: 10px;
+    display: -webkit-box;
+}
+
+.session a{
+    font-size: 12px;
+    background: #a7a7a7;
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 5px 10px 5px 10px;
+    margin: 0 15px 0 5px;
+    text-decoration: none;
+    color: black;
+}
+
+.session a:hover, .purchase a:hover{
+    color: #4f4f4f;
+    background: #c0c0c0;
+}
+
+.purchase a{
+    font-size: 12px;
+    background: #a7a7a7;
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 5px 10px 5px 10px;
+    margin: 0 5px 0 5px;
+    text-decoration: none;
+    color: black;
+}
+
+
+
+.thumbnail {
     margin-bottom: 20px;
     padding: 0px;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
 }
-.thumbnail img
-{
+
+.thumbnail img {
     margin-top: 10px;
 }
-.item.list-group-item
-{
+
+.item.list-group-item {
     float: none;
     width: 100%;
     background-color: #fff;
     margin-bottom: 10px;
 }
-.item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
-{
+
+.item.list-group-item:nth-of-type(odd):hover, .item.list-group-item:hover {
     background: #428bca;
 }
 
-.item.list-group-item .list-group-image
-{
+.item.list-group-item .list-group-image {
     margin-right: 10px;
 }
-.item.list-group-item .thumbnail
-{
+
+.item.list-group-item .thumbnail {
     margin-bottom: 0px;
 }
-.item.list-group-item .caption
-{
+
+.item.list-group-item .caption {
     padding: 9px 9px 0px 9px;
 }
-.item.list-group-item:nth-of-type(odd)
-{
+
+.item.list-group-item:nth-of-type(odd) {
     background: #eeeeee;
 }
 
-.item.list-group-item:before, .item.list-group-item:after
-{
+.item.list-group-item:before, .item.list-group-item:after {
     display: table;
     content: " ";
 }
 
-.item.list-group-item img
-{
+.item.list-group-item img {
     float: left;
 }
-.item.list-group-item:after
-{
+
+.item.list-group-item:after {
     clear: both;
 }
-.list-group-item-text
-{
+
+.list-group-item-text {
     margin: 0 0 11px;
+}
+
+/*** Hand works ***/
+
+body, html {
+    height: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background-image: url("/static/img/body_bg1.jpg");
+    background-color: #8f8f8f;
+    height: 100vh;
+    background-repeat: repeat;
+    background-position: center;
+    background-size: cover;
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+}
+
+.container {
+    z-index: 2;
+    position: relative;
+}
+
+.jumbotron {
+    z-index: 3;
+    position: sticky;
+    background-image: linear-gradient(salmon, white);
+    padding: 2em!important;
+}
+
+.productImg {
+    width: 250px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+.description {
+    height: 80px;
+}
+
+.card {
+    box-shadow: 0px 0px 33px 0px rgba(0,0,0,0.75);
+    margin-bottom: 30px;
+}
+
+#footer {
+    margin: 15px auto;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#brand {
+    height: 300px;
+}
+
+.orderConatiner{
+    background-color: rgba(255, 255, 255, 0.94);
+    padding: 0px 15px 15px 15px;
+    border-radius: 6px;
+}
+
+a.logo:link, a.logo:visited, a.logo:hover, a.logo:active{
+    background-color: transparent;
+    color: black;
+    text-decoration: none;
 }

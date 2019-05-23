@@ -7,8 +7,8 @@ public class ProductCategory extends BaseModel {
     private String department;
     private List<Product> products;
 
-    public ProductCategory(String name, String department, String description) {
-        super(name);
+    public ProductCategory(int id, String name, String department, String description) {
+        super(id, name, description);
         this.department = department;
         this.products = new ArrayList<>();
     }
@@ -21,12 +21,12 @@ public class ProductCategory extends BaseModel {
         this.department = department;
     }
 
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
-    }
-
     public List<Product> getProducts() {
         return this.products;
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
     }
 
     public void addProduct(Product product) {

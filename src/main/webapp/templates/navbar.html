@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="copy">
+    <div class="card">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">
+                <img src="static/img/logo.png" width="30" height="30" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <div id="sort-form" class="nav-link styled-select blue semi-square">
+                            <form action="/" method="POST">
+                                <select id="orderBy_productCategory" name="orderByProductCategory">
+                                    <option value="None" th:if="${selectedProduct}=='None'" selected>None</option>
+                                    <option value="None" th:if="${selectedProduct}!='None'">None</option>
+                                    <option th:each="prodCat,iterStat : ${category}" th:text="${prodCat.name}" th:value="${prodCat.name}" th:if="${selectedProduct}==${prodCat.name}" selected>Product name</option>
+                                    <option th:each="prodCat,iterStat : ${category}" th:text="${prodCat.name}" th:value="${prodCat.name}" th:if="${selectedProduct}!=${prodCat.name}">Product name</option>
+                                </select>
+
+                                <select id="orderBy_supplier" name="orderBySupplier">
+                                    <option value="None" th:if="${selectedSupplier}=='None'" selected>None</option>
+                                    <option value="None" th:if="${selectedSupplier}!='None'">None</option>
+                                    <option th:each="supp,iterStat : ${supplier}" th:text="${supp.name}" th:value="${supp.name}" th:if="${selectedSupplier}==${supp.name}" selected>Supplier name</option>
+                                    <option th:each="supp,iterStat : ${supplier}" th:text="${supp.name}" th:value="${supp.name}" th:if="${selectedSupplier}!=${supp.name}">Supplier name</option>
+                                </select>
+                                <button type="submit" name="order_direction"
+                                        value="asc" title="Ascending order"><i class="fa fa-sort-amount-asc"></i>Sort</button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+                <div class="purchase">
+                    <a class="ui-icon-link" href="/purchasedProducts">Purchased Products</a>
+                </div>
+                <div class="session">
+                    <a class="ui-icon-link" href="/logout">Logout</a>
+                    <p> Welcome <strong th:text="${session.name}"></strong>!</p>
+                </div>
+                <span class="navbar-text mr-2 font-italic">Shopping Cart... </span>
+                <div><a class="btn btn-warning" href="/shoppingcart"><i class="fas fa-shopping-cart"></i></a></div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+</body>
+</html>

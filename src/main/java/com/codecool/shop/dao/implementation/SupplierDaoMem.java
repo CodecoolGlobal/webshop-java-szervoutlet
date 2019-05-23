@@ -8,8 +8,8 @@ import java.util.List;
 
 public class SupplierDaoMem implements SupplierDao {
 
-    private List<Supplier> data = new ArrayList<>();
     private static SupplierDaoMem instance = null;
+    private List<Supplier> data = new ArrayList<>();
 
     /* A private Constructor prevents any other class from instantiating.
      */
@@ -43,4 +43,15 @@ public class SupplierDaoMem implements SupplierDao {
     public List<Supplier> getAll() {
         return data;
     }
+
+    @Override
+    public Supplier getByName(String supplierName) {
+        for (Supplier supp : data) {
+            if (supp.getName().equals(supplierName)) {
+                return supp;
+            }
+        }
+        return null;
+    }
+
 }

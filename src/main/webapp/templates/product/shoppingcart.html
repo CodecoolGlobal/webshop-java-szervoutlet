@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Shopping Cart</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
+    <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js"
+            integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ"
+            crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+<div class="jumbotron text-center">
+    <h1><a class="logo" href="index.html">Shopping Cart</a></h1>
+</div>
+<div class="background-image"></div>
+<div class="container">
+    <div th:if="${session}" class="card session">
+        <a class="ui-icon-link" href="/logout">Logout</a>
+        <p> Welcome <strong th:text="${session.name}"></strong>!</p>
+    </div>
+
+    <div th:if="${cart.isEmpty()}"><h2 class="text-center mt-5">Your cart is empty!</h2></div>
+    <div id="products" class="row mt-2">
+        <div class="col col-sm-12 col-md-6 col-lg-4 productCard" th:each="prod,iterStat: ${cart}">
+            <div class="card">
+                <img class="productImg" src="http://placehold.it/400x250/000/fff"
+                     th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt=""/>
+                <div class="card-header">
+                    <h4 class="card-title" th:text="${prod.name}">Product name</h4>
+                    <p class="card-text description" th:text="${prod.description}">Product description... </p>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="lead" th:text="${prod.getDefaultPrice()}"></p>
+                    </div>
+                    <div class="card-quantity">
+                        <div class="row">
+                            <label for="quantity">Quantity</label>
+                        </div>
+                        <div class="row form-inline">
+                            <form action="/shoppingcart" method="POST">
+                                <input type="hidden" name="itemId" th:value="${prod.getId()}">
+                                <input type="number" name="quantity" class="form-control input-lg" id="quantity" min="0"
+                                       max="999" th:value="${cartDao.getQuantity(prod,session.id)}">
+                                <button type="submit" class="form-control btn btn-success"><i class="fas fa-check"></i>
+                                    Apply
+                                </button>
+                            </form>
+                            <form action="/shoppingcart" method="POST" class="form-inline">
+                                <button type="submit" class="form-control btn btn-danger" name="removeFromCart"
+                                        th:value="${prod.getId()}"><i class="fas fa-trash"></i> Remove all
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${!cart.isEmpty()}">
+        <h2 class="text-center mt-5"
+            th:text="'Total: ' + ${#numbers.formatDecimal(sumOfProductValues,  0, 'COMMA', 2, 'POINT')} + ' USD'">
+            Sum: </h2>
+        <form style="text-align: center" action="/orderdetails" method="GET">
+            <button class="btn btn-success" type="submit" name="orderdetails"><i class="fas fa-clipboard-check"></i>
+                Checkout
+            </button>
+        </form>
+    </div>
+    <div th:replace="footer.html :: copy"></div>
+</div>
+</body>
+</html>
