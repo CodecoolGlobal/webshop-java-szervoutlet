@@ -6,6 +6,7 @@ import com.codecool.shop.dao.implementation.jdbc.PurchasedDaoJDBC;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ public class OrderDetails extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        HttpSession session=req.getSession(false);
+        HttpSession session = req.getSession(false);
         int userId = (int) session.getAttribute("id");
 
         CartDaoJDBC cart = CartDaoJDBC.getInstance();

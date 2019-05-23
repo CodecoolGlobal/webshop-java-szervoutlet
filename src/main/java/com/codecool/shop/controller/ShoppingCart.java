@@ -4,13 +4,13 @@ import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.jdbc.CartDaoJDBC;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
 
 
 @WebServlet(urlPatterns = {"/shoppingcart"})
@@ -40,12 +40,11 @@ public class ShoppingCart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(false);
-        int userId =(int)session.getAttribute("id");
+        int userId = (int) session.getAttribute("id");
 
         if (isRemoveAllButtonClicked(req)) {
             removeChoosenProductFromCart(req);
-        }
-        else cart.getCartProductQuantity(req, userId, false);
+        } else cart.getCartProductQuantity(req, userId, false);
         resp.sendRedirect("/shoppingcart");
     }
 

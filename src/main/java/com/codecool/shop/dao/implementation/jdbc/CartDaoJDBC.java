@@ -15,11 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartDaoJDBC extends DatabaseDao implements ProductDao {
+    private static CartDaoJDBC instance = null;
+    ProductDaoJDBC productDaoJDBC = ProductDaoJDBC.getInstance();
     private ProductCategoryDaoJDBC productCategoryDaoJDBC = ProductCategoryDaoJDBC.getInstance();
     private SupplierDaoJDBC supplierDaoJDBC = SupplierDaoJDBC.getInstance();
-    ProductDaoJDBC productDaoJDBC = ProductDaoJDBC.getInstance();
-
-    private static CartDaoJDBC instance = null;
 
 
     private CartDaoJDBC() {
@@ -37,12 +36,12 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
         List<Product> products = getProducts(query);
         products.removeIf(product1 -> product1.getId() != product.getId());
 
-        if(!products.isEmpty()){
-                if(isAdd){
-                    query = String.format("UPDATE shoppingcart SET quantity = '%s' WHERE productid = '%d' AND userid = '%d';", quantity + getQuantity(product, userId), product.getId(), userId);
-                } else {
-                    query = String.format("UPDATE shoppingcart SET quantity = '%s' WHERE productid = '%d' AND userid = '%d';", quantity, product.getId(), userId);
-                }
+        if (!products.isEmpty()) {
+            if (isAdd) {
+                query = String.format("UPDATE shoppingcart SET quantity = '%s' WHERE productid = '%d' AND userid = '%d';", quantity + getQuantity(product, userId), product.getId(), userId);
+            } else {
+                query = String.format("UPDATE shoppingcart SET quantity = '%s' WHERE productid = '%d' AND userid = '%d';", quantity, product.getId(), userId);
+            }
         } else {
             query = String.format("INSERT INTO shoppingcart(productid, quantity, purchased, userid) VALUES('%s', '%s', '%s', '%s');", product.getId(), quantity, false, userId);
         }
@@ -59,16 +58,16 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
 
     }
 
-    public int getQuantity(Product product, int userId){
+    public int getQuantity(Product product, int userId) {
         String query = String.format("SELECT quantity FROM shoppingcart WHERE userid ='%d' AND productid = '%d';", userId, product.getId());
 
         int quantity = 0;
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ){
-            while (resultSet.next()){
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)
+        ) {
+            while (resultSet.next()) {
                 quantity = resultSet.getInt("quantity");
             }
 
@@ -78,7 +77,6 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
 
         return quantity;
     }
-
 
 
     @Override
@@ -103,7 +101,7 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
 
 
     public List<Product> getAll(int userId) {
-        String query = String.format("SELECT * FROM products JOIN shoppingcart ON products.id = shoppingcart.productid WHERE shoppingcart.userid = '%d';",userId);
+        String query = String.format("SELECT * FROM products JOIN shoppingcart ON products.id = shoppingcart.productid WHERE shoppingcart.userid = '%d';", userId);
         return getProducts(query);
     }
 
@@ -126,10 +124,10 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
         List<Product> resultList = new ArrayList<>();
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ){
-            while (resultSet.next()){
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)
+        ) {
+            while (resultSet.next()) {
                 Product product = new Product(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
@@ -149,10 +147,10 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
         return resultList;
     }
 
-    public float getSumOfProductPrices(int userId){
+    public float getSumOfProductPrices(int userId) {
         float sumOfProductPrices = 0.0f;
-        for(Product product: getAll(userId)){
-            sumOfProductPrices += product.getDefaultPrice()*getQuantity(product, userId);
+        for (Product product : getAll(userId)) {
+            sumOfProductPrices += product.getDefaultPrice() * getQuantity(product, userId);
         }
         return sumOfProductPrices;
     }
@@ -185,7 +183,7 @@ public class CartDaoJDBC extends DatabaseDao implements ProductDao {
 
 
     public void clearShoppingCart(final int userId) {
-        String query = String.format("DELETE FROM shoppingcart WHERE userid = '%s';",userId);
+        String query = String.format("DELETE FROM shoppingcart WHERE userid = '%s';", userId);
 
         try {
             executeUpdate(query);

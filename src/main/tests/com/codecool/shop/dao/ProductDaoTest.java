@@ -29,6 +29,8 @@ class ProductDaoTest {
         productDao.remove(1);
     }
 
+    @Test
+    void testIsOneEqualsToOne() {assertEquals(1,1);}
 
     @Test
     void testIsProductDaoNotNull() {

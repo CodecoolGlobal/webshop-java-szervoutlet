@@ -18,7 +18,7 @@ public class AddToCart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(false);
-        int userId = (int)session.getAttribute("id");
+        int userId = (int) session.getAttribute("id");
 
         cart.getCartProductQuantity(req, userId, true);
         resp.sendRedirect("/");

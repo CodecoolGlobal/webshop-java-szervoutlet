@@ -19,44 +19,44 @@ public class User {
         this.shippingAddress = shippingAddress;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setBillingAdress(String billingAddress) {
-        this.billingAddress = billingAddress;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getBillingAdress() {
         return billingAddress;
     }
 
-    public void setShippingAdress(String shippingAddress) {
-        this.shippingAddress = shippingAddress;
+    public void setBillingAdress(String billingAddress) {
+        this.billingAddress = billingAddress;
     }
 
     public String getShippingAdress() {
         return shippingAddress;
+    }
+
+    public void setShippingAdress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 
     public String getPassword() {
