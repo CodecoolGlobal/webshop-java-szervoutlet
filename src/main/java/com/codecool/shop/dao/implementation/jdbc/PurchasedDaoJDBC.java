@@ -14,11 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PurchasedDaoJDBC extends DatabaseDao implements ProductDao {
+    private static PurchasedDaoJDBC instance;
     private CartDaoJDBC cart = CartDaoJDBC.getInstance();
     private SupplierDaoJDBC supplierDaoJDBC = SupplierDaoJDBC.getInstance();
     private ProductCategoryDaoJDBC productCategoryDaoJDBC = ProductCategoryDaoJDBC.getInstance();
-
-    private static PurchasedDaoJDBC instance;
 
     private PurchasedDaoJDBC() {
     }
@@ -35,10 +34,10 @@ public class PurchasedDaoJDBC extends DatabaseDao implements ProductDao {
 
     }
 
-    public void addAllProduct(List<Product> products, int userid){
+    public void addAllProduct(List<Product> products, int userid) {
         for (final Product product : products) {
             int quantity = cart.getQuantity(product, userid);
-            String query = String.format("INSERT INTO purchased_products(productid, quantity, userid) VALUES('%s', '%s', '%s');",product.getId(), quantity, userid);
+            String query = String.format("INSERT INTO purchased_products(productid, quantity, userid) VALUES('%s', '%s', '%s');", product.getId(), quantity, userid);
 
             try {
                 executeQuery(query);
@@ -47,16 +46,16 @@ public class PurchasedDaoJDBC extends DatabaseDao implements ProductDao {
         }
     }
 
-    public int getQuantity(Product product, int userId){
+    public int getQuantity(Product product, int userId) {
         String query = String.format("SELECT quantity FROM purchased_products WHERE userid ='%d' AND productid = '%d';", userId, product.getId());
 
         int quantity = 0;
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ){
-            while (resultSet.next()){
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)
+        ) {
+            while (resultSet.next()) {
                 quantity = resultSet.getInt("quantity");
             }
 
@@ -82,7 +81,7 @@ public class PurchasedDaoJDBC extends DatabaseDao implements ProductDao {
         return null;
     }
 
-    public List<Product> getAll(int userid){
+    public List<Product> getAll(int userid) {
         String query = String.format("SELECT * FROM products JOIN purchased_products ON products.id = purchased_products.productid WHERE purchased_products.userid = '%d';", userid);
         return getProducts(query);
     }
@@ -107,10 +106,10 @@ public class PurchasedDaoJDBC extends DatabaseDao implements ProductDao {
         List<Product> resultList = new ArrayList<>();
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ){
-            while (resultSet.next()){
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)
+        ) {
+            while (resultSet.next()) {
                 Product product = new Product(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),

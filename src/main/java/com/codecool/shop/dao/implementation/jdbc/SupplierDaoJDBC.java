@@ -4,7 +4,10 @@ import com.codecool.shop.dao.DatabaseDao;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +42,8 @@ public class SupplierDaoJDBC extends DatabaseDao implements SupplierDao {
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)
-        ){
-            if (resultSet.next()){
+        ) {
+            if (resultSet.next()) {
                 return new Supplier(resultSet.getInt("id"),
                         resultSet.getString("name"), resultSet.getString("description"));
             } else {
@@ -71,10 +74,10 @@ public class SupplierDaoJDBC extends DatabaseDao implements SupplierDao {
         List<Supplier> resultList = new ArrayList<>();
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)
-        ){
-            while (resultSet.next()){
+        ) {
+            while (resultSet.next()) {
                 Supplier actualSupplier = new Supplier(resultSet.getInt("id"), resultSet.getString("name"),
                         resultSet.getString("description"));
                 resultList.add(actualSupplier);
@@ -95,10 +98,10 @@ public class SupplierDaoJDBC extends DatabaseDao implements SupplierDao {
         Supplier result = null;
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)
-        ){
-            while (resultSet.next()){
+        ) {
+            while (resultSet.next()) {
                 result = new Supplier(resultSet.getInt("id"), resultSet.getString("name"),
                         resultSet.getString("description"));
             }

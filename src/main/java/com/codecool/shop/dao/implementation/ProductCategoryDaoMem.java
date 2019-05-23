@@ -9,8 +9,8 @@ import java.util.List;
 
 public class ProductCategoryDaoMem implements ProductCategoryDao {
 
-    private List<ProductCategory> data = new ArrayList<>();
     private static ProductCategoryDaoMem instance = null;
+    private List<ProductCategory> data = new ArrayList<>();
 
     /* A private Constructor prevents any other class from instantiating.
      */
@@ -46,12 +46,13 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
     }
 
     @Override
-    public ProductCategory getByName(String productCategoryName){
-        for(ProductCategory pc : data){
-            if(pc.getName().equals(productCategoryName)){
+    public ProductCategory getByName(String productCategoryName) {
+        for (ProductCategory pc : data) {
+            if (pc.getName().equals(productCategoryName)) {
                 return pc;
             }
         }
         return null;
-    };
+    }
+
 }

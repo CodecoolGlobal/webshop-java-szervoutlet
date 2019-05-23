@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 
 public class ProductDaoMem implements ProductDao {
 
-    private List<Product> data = new ArrayList<>();
     private static ProductDaoMem instance = null;
+    private List<Product> data = new ArrayList<>();
 
     /* A private Constructor prevents any other class from instantiating.
      */
@@ -59,7 +59,7 @@ public class ProductDaoMem implements ProductDao {
     }
 
     @Override
-    public List<Product> getBy(ProductCategory productCategory, Supplier supplier){
+    public List<Product> getBy(ProductCategory productCategory, Supplier supplier) {
         List<Product> sortByProductCategory = data.stream().filter(t -> t.getProductCategory().equals(productCategory)).collect(Collectors.toList());
         return sortByProductCategory.stream().filter(t -> t.getSupplier().equals(supplier)).collect(Collectors.toList());
     }

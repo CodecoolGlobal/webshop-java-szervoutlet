@@ -98,10 +98,10 @@ public class ProductCategoryDaoJDBC extends DatabaseDao implements ProductCatego
         ProductCategory result = null;
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)
-        ){
-            while (resultSet.next()){
+        ) {
+            while (resultSet.next()) {
                 result = new ProductCategory(resultSet.getInt("id"), resultSet.getString("name"),
                         resultSet.getString("department"), resultSet.getString("description"));
 

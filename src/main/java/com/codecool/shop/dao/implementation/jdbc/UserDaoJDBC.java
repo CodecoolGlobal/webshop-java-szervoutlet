@@ -2,10 +2,8 @@ package com.codecool.shop.dao.implementation.jdbc;
 
 import com.codecool.shop.dao.DatabaseDao;
 import com.codecool.shop.dao.UserDao;
-import com.codecool.shop.model.Product;
 import com.codecool.shop.model.User;
 
-import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,7 +28,7 @@ public class UserDaoJDBC extends DatabaseDao implements UserDao {
 
     @Override
     public void add(String name, String email, String password, String phoneNumber, String shippingAddress, String billingAddress) {
-        String query = String.format("INSERT INTO users(email, password, phone_number, billing_address, shipping_address, name) VALUES('%s', '%s', '%s', '%s', '%s', '%s');",email,password,phoneNumber,shippingAddress, billingAddress, name);
+        String query = String.format("INSERT INTO users(email, password, phone_number, billing_address, shipping_address, name) VALUES('%s', '%s', '%s', '%s', '%s', '%s');", email, password, phoneNumber, shippingAddress, billingAddress, name);
         try {
             executeUpdate(query);
         } catch (SQLException e) {
@@ -39,11 +37,10 @@ public class UserDaoJDBC extends DatabaseDao implements UserDao {
     }
 
     @Override
-    public User find(String email, String password)
-    {
+    public User find(String email, String password) {
         List<User> users = getAll();
         users.removeIf(user -> !user.getEmail().equals(email) || !user.getPassword().equals(password));
-        if(users.size() > 0){
+        if (users.size() > 0) {
             return users.get(0);
         } else {
             return null;

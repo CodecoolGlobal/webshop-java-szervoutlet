@@ -15,9 +15,9 @@ import java.util.List;
 
 public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
 
+    private static ProductDaoJDBC instance = null;
     private ProductCategoryDaoJDBC productCategoryDaoJDBC = ProductCategoryDaoJDBC.getInstance();
     private SupplierDaoJDBC supplierDaoJDBC = SupplierDaoJDBC.getInstance();
-    private static ProductDaoJDBC instance = null;
 
     private ProductDaoJDBC() {
     }
@@ -80,7 +80,6 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
     }
 
 
-
     @Override
     public List<Product> getAll() {
         String query = "SELECT * FROM products;";
@@ -129,10 +128,10 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
         List<Product> resultList = new ArrayList<>();
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ){
-            while (resultSet.next()){
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)
+        ) {
+            while (resultSet.next()) {
                 Product product = new Product(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
@@ -154,7 +153,7 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
 
     @Override
     public List<Product> getBy(ProductCategory productCategory, Supplier supplier) {
-        String query = "SELECT * FROM products WHERE product_category ='" + productCategory.getId() + "'AND supplier ='" + supplier.getId() +"';";
+        String query = "SELECT * FROM products WHERE product_category ='" + productCategory.getId() + "'AND supplier ='" + supplier.getId() + "';";
 
         return getProducts(query);
     }
@@ -162,7 +161,7 @@ public class ProductDaoJDBC extends DatabaseDao implements ProductDao {
     public List<Product> getProducts(ProductDaoJDBC productDaoJDBC, Supplier supplier, ProductCategory productCategory, String selectedSupplierValue, String selectedProductValue) {
         if (!selectedSupplierValue.equals("None")) {
             if (!selectedProductValue.equals("None")) {
-                return  productDaoJDBC.getBy(productCategory, supplier);
+                return productDaoJDBC.getBy(productCategory, supplier);
             }
             return productDaoJDBC.getBy(supplier);
 

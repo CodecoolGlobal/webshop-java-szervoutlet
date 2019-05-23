@@ -9,7 +9,7 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
-import javax.servlet.ServletException;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,19 +36,21 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(false);
 
-        if(session!=null) {
-            String name=(String)session.getAttribute("name") ;
+        if (session != null) {
+            String name = (String) session.getAttribute("name");
         } else resp.sendRedirect("/login");
 
 
         try {
             getProducts(productDaoJDBC, supplier, productCategory);
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
 
         resp.setHeader("Content-type", "text/html; charset=utf-8");
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        if (productCategoryDaoJDBC.getAll().contains(productCategory)) context.setVariable("currentCategory", productCategory);
+        if (productCategoryDaoJDBC.getAll().contains(productCategory))
+            context.setVariable("currentCategory", productCategory);
         setVariables(context);
         context.setVariable("session", session);
         engine.process("product/index.html", context, resp.getWriter());
